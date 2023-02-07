@@ -1,0 +1,98 @@
+:root{
+    font-size: 16px;
+    font-family: 'Montserrat';
+
+    --bg-primary: #000000;
+    --bg-secondary: #1c1c1c;
+    --font-primary: #ffffff;
+}
+
+body{
+    background-color: var(--bg-primary);
+    color: var(--font-primary);
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Customized Scrollbar */
+body::-webkit-scrollbar{
+    width: 0.5rem;
+}
+body::-webkit-scrollbar-thumb{
+    background: var(--bg-secondary);
+    border-radius: 0.5rem;
+}
+
+main{
+    margin-left: 15.5rem;
+    padding: 1rem;
+}
+
+/* Navigation Bar */
+.navbar{
+    position: fixed;
+    background-color: var(--bg-secondary);
+}
+.navbar-nav{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+.navbar-icon{
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 3rem;
+}
+.navbar-title{
+    padding-bottom: 3rem;
+
+    margin-left: 3rem;
+    width: 65%;
+    font-size: 1.75rem;
+}
+.navbar-item{
+    margin-left: 2.5rem;
+    margin-top: 1rem;
+}
+.navbar-link{
+    opacity: 70%;
+
+    text-decoration: none;
+    color: var(--font-primary);
+}
+.navbar-link:hover{
+    opacity: 100%;
+    transition: 200ms ease;
+}
+
+@media only screen and (max-width: 800px){
+    .navbar{
+        top: 0;
+        width: 15.5rem;
+        height: 100vh;
+        transition: 500ms ease;
+    }
+    
+    .navbar-menu{
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 800px){
+    .navbar{
+        top: 0;
+        width: 15.5rem;
+        height: 100vh;
+        transition: 500ms ease;
+    }
+
+    .navbar-menu{
+        display: none;
+    }
+
+}
+
