@@ -237,6 +237,8 @@ input[type=submit]{
   font-family: 'Montserrat';
   background-color: var(--font-primary);
   opacity: 70%;
+  border-radius: 4px;
+  border: none;
 }
 
 input[type=submit]:hover{
@@ -494,7 +496,7 @@ input[type=submit]:hover{
 
 .main_SCart{
     text-align: center;
-    max-width: 1000px; 
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -657,3 +659,25 @@ input[type=submit]:hover{
 }
 
 /* About-Us & Shopping cart CSS ENDS here */
+
+/*Size Chart Styles*/
+
+.sizechart-main{
+  margin-left: 15.5rem;
+  margin-top: 3rem;
+  font-size: 24px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sizechart-image{
+  max-width: 60%;
+  height: auto;
+  margin-bottom: 5rem;
+}
+
+.sizechart-main h1{
+  margin: 5rem;
+}
