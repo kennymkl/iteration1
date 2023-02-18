@@ -466,12 +466,9 @@ input[type=submit]:hover{
 
 .main_AU-text{
     text-indent: 2%;
-    text-align: justify;
-    margin-right: 200px;
-    margin-left: 250px;
+    text-align: center;
     line-height: 1.5;
     font-size: 16px;
-    font-weight: 500;
 }
 
 .nav-logo{
@@ -508,8 +505,8 @@ input[type=submit]:hover{
 }
 
 .big-logo img{
-    height: 300px;
-    width: 300px;
+    height: 25%;
+    width: 25%;
 }
 
 .box :hover{
