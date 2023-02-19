@@ -60,8 +60,8 @@
 					<input type="password" name="password" id="password" class="input-text" required="" aria-required="true">
 				</div>
 				<div class="form-row">
-					<label for="comfirm_password">CONFIRM PASSWORD</label>
-					<input type="password" name="comfirm_password" id="comfirm_password" class="input-text" required="" aria-required="true">
+					<label for="confirm_password">CONFIRM PASSWORD</label>
+					<input type="password" name="confirm_password" id="confirm_password" class="input-text" required="" aria-required="true">
 				</div>
 				<div class="form-row-last">
 					<input type="submit" name="register" class="register" value="Register">
@@ -91,13 +91,13 @@
 			      	email: true
 			    },
 			    password: "required",
-		    	comfirm_password: {
+		    	confirm_password: {
 		      		equalTo: "#password"
 		    	}
 		  	},
 		  	messages: {
 		  		username: {
-		  			required: "Please enter an username"
+		  			required: "Please enter a username"
 		  		},
 		  		your_email: {
 		  			required: "Please provide an email"
@@ -105,7 +105,7 @@
 		  		password: {
 	  				required: "Please provide a password"
 		  		},
-		  		comfirm_password: {
+		  		confirm_password: {
 		  			required: "Please provide a password",
 		      		equalTo: "Wrong Password"
 		    	}
