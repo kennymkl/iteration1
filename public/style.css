@@ -488,6 +488,7 @@ main{
 }
 
 .big-logo img{
+    margin-top: 5rem;
     height: 25%;
     width: 25%;
     max-width: 50em;
