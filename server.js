@@ -44,17 +44,23 @@ app.use(function(req, res, next) {
 const UserModel = require('./models/userDB');
 const UserCartModel = require('./models/user_cartDB');
 const ItemsModel = require('./models/itemsDB');
+const { findOneAndDelete } = require('./models/user_cartDB');
 
 // LANDING PAGE
 app.get('/', function(req, res){
-    res.render('landing-page');
+    let username = null;
+    if(req.session.isAuth){
+        username = req.session.username;
+    }
+    res.render('landing-page', {
+        username: username
+    });
 });
 app.get('/landing-page', function(req, res){
     let username = null;
     if(req.session.isAuth){
         username = req.session.username;
     }
-
     res.render('landing-page',{
         username: username
     });
@@ -89,15 +95,94 @@ app.get('/shop', async function(req, res){
 });
 
 // SHOPPING-CART
-app.get('/shopping-cart', function(req, res){
-    let username = null;
-    if(req.session.isAuth){
-        username = req.session.username;
-    }
-    res.render('shopping-cart',{
-        username: username
-    });
+app.get('/shopping-cart', async function(req, res){
+    
+    const cart_items = await UserCartModel.find({user_id: req.session._id});
+    console.log(cart_items);
+
+    res.render('shopping-cart', {
+        cart_items: cart_items,
+        username: req.session.username
+    })
 });
+// DELETE ITEM IN SHOPPING CART
+app.get('/delete-item/:user_id/:item_name/:size', async function(req, res) {
+    const {user_id, item_name, size} = req.params
+
+    console.log(req.params);
+    const delete_item = await UserCartModel.updateOne(
+        {user_id: req.session._id},
+        {$pull: {
+            items: {
+                item_name: item_name,
+                size: size
+                }
+            }
+        }
+    );
+
+    const cart_items = await UserCartModel.find({user_id: req.session._id});
+    console.log(cart_items);
+
+    res.redirect('/shopping-cart');
+
+});
+
+//ADD ITEM TO USER CART
+app.post('/add-to-cart', async function(req, res){
+
+    const items = await ItemsModel.find({});
+
+    const {item_name, item_photo ,price, size, quantity} = req.body;
+    const total_price = quantity * price;
+
+    console.log("Item Name: " + item_name);
+    console.log("Item Photo: " + item_photo)
+    console.log("Price: " + price);
+    console.log("Size: " + size);
+    console.log("Qty: " + quantity);
+    console.log("Total Price: " + total_price);
+    
+    const item =  {item_name, item_photo, price, size, quantity, total_price}
+
+    const find_item = await UserCartModel.findOne({
+        user_id: req.session._id,
+        items: {
+            $elemMatch: {
+                item_name: item_name,
+                size: size
+            }
+        }
+    });
+    console.log("find_item: " + find_item);
+
+    if(find_item) { // IF ITEMS EXIST
+        const user_cart = await UserCartModel.updateOne({
+                user_id: req.session._id,
+                items: {
+                    $elemMatch: {
+                        item_name: item_name,
+                        size: size
+                    }
+                }
+            }, {
+                $inc:{
+                    "items.$.quantity": quantity,
+                    "items.$.total_price": total_price
+                }
+            });
+        console.log("updated item: " + user_cart);
+    } else { // IF ITEM DOES NOT EXIST
+        const user_cart = await UserCartModel.updateOne(
+            {user_id: req.session._id},
+            {$push: {items: item}}
+        );
+        console.log("added item: " + user_cart);
+    }
+    
+    res.redirect('/shop');
+});
+
 
 // SIZE CHART
 app.get('/size-chart', function(req, res){

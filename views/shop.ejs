@@ -45,12 +45,12 @@
 				<% items.forEach((item) =>{ %> 
 					<form action="add-to-cart" method="post">
 						<div class="item-card"> 
-							<% let photo = item.item_photo; %>
-							<img class="item-card-img" src="/images/<%= photo %>" alt="<%= photo %>" >
+							<img class="item-card-img" src="/images/<%= item.item_photo %>" alt="<%= item.item_photo %>" >
 							<div class="item-desc">
 								<div class="item-name"> 
 									<%= item.item_name %> 
 									<input type="hidden" name="item_name" value="<%= item.item_name %> ">
+									<input type="hidden" name="item_photo" value="<%= item.item_photo %> ">
 								</div>
 								<div class="item-price"> 
 									<%= item.price %> 
@@ -68,7 +68,7 @@
 									<label for="qty">Qty: </label>
 									<input type="number" name="quantity" value="1" class="quantity" min="1">
 								</div>
-								<a href="#" class="buy-btn">Add To Cart</a>
+								<button class="buy-btn" type="submit">Add To Cart</button>
 							</div>
 						</div>
 					</form>

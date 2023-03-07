@@ -490,12 +490,15 @@ input[type=submit]:hover{
     width: 75%;
 }
 
+
+.SCart{
+    margin-left: 8rem;
+}
 .main_SCart{
     max-width: 1000px;
-    margin: 0 auto; 
+    margin: 0 auto;
     box-sizing: border-box;
 }
-
 .main_SCart h1{
     padding: 30px 0;
     text-align: center;
@@ -512,12 +515,12 @@ input[type=submit]:hover{
 
 .box{
     display: flex;
-    width: 100%;
-    height: 26%;
+    width: 60rem;
+    height: 15rem;
     overflow: hidden;
     margin-bottom: 20px;
-    background: white;
-    color:#000000;
+    background: #1c1c1c;
+    color:#FFFFFF;
     transition: all .6s ease;
     align-items: center;
 }
@@ -528,8 +531,8 @@ input[type=submit]:hover{
 
 .box img{
     width: 55%;
-    height: 100%;
-    object-fit: cover;
+    height: 80%;
+    object-fit: contain;
 }
 
 .content {
@@ -557,7 +560,11 @@ input[type=submit]:hover{
     border-radius: 10px;
     font-weight: 600;
 }
-
+.btn2{
+    border: none;
+    background-color: rgba(0,0,0,0);
+    color: #FFFFFF;
+}
 .btn-area:hover{
     background-color: #ff0000;
 }
@@ -578,9 +585,9 @@ input[type=submit]:hover{
 /* Right Bar */
 .right-bar{
     flex: 25%;
-    margin-left: 20px;
     padding: 20px;
-    height: 400px;
+    height: 200px;
+    width: 57.5rem;
     border-radius: 5px;
     background: white;
     color: #000000;
@@ -688,6 +695,7 @@ input[type=submit]:hover{
 
 /* SHOP CSS HERE*/
 .shop-filter{
+    margin: 2rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -761,13 +769,13 @@ input[type=submit]:hover{
 	left: 50%;
 	margin-top: 2.5rem;
 	border-radius: 20px;
+    border: none;
 	color: #FFFFFF;
 	background: var(--bg-primary);
 	display: none;
 	opacity: 70%;
 	text-decoration:none;
 }
-
 .buy-btn:hover{
 	opacity: 100%;
 }
