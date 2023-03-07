@@ -72,6 +72,9 @@ main{
     margin-top: auto;
     margin-bottom: 10rem;
 }
+.nav-bot{
+    margin-top: 120%;
+}
 .navbar-link{
     display: flex;
     align-items: center;
@@ -87,6 +90,12 @@ main{
 .navbar-link:hover{
     opacity: 100%;
     transition: 200ms ease;
+}
+.nav-user{
+    color: #FFFFFF;
+    font-size: 1.75rem;
+    margin-left: 2rem;
+    margin-bottom: 0.5  rem;
 }
 @media only screen and (max-width: 800px){
     .navbar{
@@ -116,7 +125,7 @@ main{
 
 /* BANNER */
 .banner{
-    margin: -1rem;
+    margin: -2.2rem;
 
     display: flex;
     justify-content: center;
@@ -132,15 +141,14 @@ main{
 /* COLLECTION */
 .collection-list{
     margin-top: 6rem;
+    margin-bottom: 3rem;
 
     align-items: center;
     display: flex;
     justify-content: center;
 }
 .collection{
-    margin-bottom: -3rem;
     width: 60rem;
-    height: 40rem;
 
     background-color: #000000;
     text-align: center;
@@ -157,6 +165,7 @@ main{
     align-items: center;
     display: flex;
     justify-content: center;
+    margin-bottom: 0.5rem;
 }
 .icon-link{
     margin: 2rem;
@@ -780,11 +789,21 @@ input[type=submit]:hover{
 	display:none;
 }
 
+.item-quantity{
+	margin-top: 0.5rem;
+    font-size: 1.5rem;
+	display:none;
+}
+.quantity{
+    width: 50px
+}
+
 .item-card:hover{
 	background: var(--bg-secondary);
 }
 
 .item-card:hover .item-price{
+    transition: 300ms ease;
 	display:flex;
 }
 
@@ -793,6 +812,10 @@ input[type=submit]:hover{
 }
 
 .item-card:hover .item-size{
+	display:flex;
+}
+
+.item-card:hover .item-quantity{
 	display:flex;
 }
 

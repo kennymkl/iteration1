@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Retrospect Apparel Co.</title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+    <link href="https://cdjns.cloudfare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/679532c273.js" crossorigin="anonymous"></script>
+    
+    <!-- ICON -->
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <% if(username){%>
+    <%- include ('partials/user-navbar') %>
+    <%} else{ %>
+    <%- include ('partials/navbar') %>\
+    <%} %>  
+
+    <!-- MAIN CONTENT -->
+    
+    <div class="main_SCart">
+        <h1>Shopping Cart</h1>
+            <div class="project">
+                <div class="shop">
+                    <!-- Item 1 -->
+                    <div class="box">
+                        <img src="images/product_shot1.jpg" alt="">
+                            <div class="content">
+                                <h3>"NO DATA" Shirt (White)</h3> <!-- NAME OF PRODUCT-->
+                                <h4>Price: PHP 550</h4> <!-- PRICE OF PRODUCT-->
+                                <p class="unit">Quantity: <input type="number" value="1" min="1" max="5"></p> <!-- HOW MANY THE USER WANTS TO BUY -->
+                                <p class="btn-area">
+                                    <i class="fa fa-trash"></i>
+                                    <span class="btn2">Remove</span> <!-- REMOVE PRODUCT -->
+                                </p>
+                            </div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="box">
+                        <img src="images/product_shot2.jpg"alt="">
+                            <div class="content">
+                                <h3>"NO DATA" Shirt (Black)</h3> <!-- NAME OF PRODUCT-->
+                                <h4>Price: PHP 550</h4> <!-- PRICE OF PRODUCT-->
+                                <p class="unit">Quantity: <input type="number" value="1" min="1" max="5"></p> <!-- HOW MANY THE USER WANTS TO BUY -->
+                                <p class="btn-area">
+                                    <i class="fa fa-trash"></i>
+                                    <span class="btn2">Remove</span> <!-- REMOVE PRODUCT-->
+                                </p>
+                            </div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="box">
+                        <img src="images/product_shot3.jpg"alt="">
+                            <div class="content">
+                                <h3>"NLND" Shirt (Black)</h3> <!-- NAME OF PRODUCT-->
+                                <h4>Price: PHP 550</h4> <!-- PRICE OF PRODUCT-->
+                                <p class="unit">Quantity: <input type="number" value="1" min="1" max="5"></p> <!-- HOW MANY THE USER WANTS TO BUY -->
+                                <p class="btn-area">
+                                    <i class="fa fa-trash"></i>
+                                    <span class="btn2">Remove</span> <!-- REMOVE PRODUCT-->
+                                </p>
+                            </div>
+                    </div>
+                </div>  
+                
+                <div class="right-bar">
+                    <p><span>Subtotal</span> <span>PHP 1650</span></p>
+                    <hr>
+                    <p><span>Tax (5%)</span> <span>PHP 82</span></p>
+                    <hr>
+                    <p><span>Shipping</span> <span>PHP 50</span></p>
+                    <hr>
+                    <p><span>Total</span> <span>PHP 1782</span></p>
+                    
+                    <a href="#"><i class="fa-solid fa-cart-shopping"></i>Checkout</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <%- include('partials/footer-links') %>   
+</body>
+</html>

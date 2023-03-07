@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Retrospect Apparel Co.</title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+    <script src="https://kit.fontawesome.com/679532c273.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <% if(username){%>
+    <%- include ('partials/user-navbar') %>
+    <%} else{ %>
+    <%- include ('partials/navbar') %>\
+    <%} %>
+
+    <!-- MAIN CONTENT -->
+    <main class = "main_AU">
+        <div class="big-logo">
+            <img src="images/retrospect-logo.png">
+        </div>
+        <h2>About Us</h2>
+        
+        <p class = "main_AU-text">Retrospect Apparel Co. was founded during the pandemic by a couple of friends with a realization that most people like to rekindle their
+            past memories especially in this trying times. We started this brand to share different experiences, and perspectives using the shirts we
+            produce as a canvas. We aim to create something that exceeds our existence.
+        </p>
+        <br>
+        <p class = "main_AU-text">It is our goal to create a community where people has the same interests and a platform for artist to express and introduce their art
+            and stories. This brand is the embodiment of our vision for the future of the youth, we aspire to bring them together and make movements
+             towards the goal we believe in together. Together, Let's do this one byte at a time.
+        </p>
+        <br>
+
+        <h2>Contact Us</h2>
+        <h4>Email: retrospecttm@gmail.com</h4>
+
+        <!-- FOOTER -->
+        <%- include('partials/footer-links')%>
+    </main>
+</body>
+</html>
