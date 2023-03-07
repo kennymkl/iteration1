@@ -25,10 +25,8 @@ body::-webkit-scrollbar-thumb{
 }
 
 main{
-    display: flex;
-    flex-direction: column;
     margin-left: 15.5rem;
-
+    padding: 1rem;
 }
 
 
@@ -127,8 +125,8 @@ main{
 }
 .banner-img{
     flex-shrink: 0;
-
-    
+    min-width: 100%;
+    min-height: 100%
 }
 
 /* COLLECTION */
@@ -155,7 +153,6 @@ main{
 }
 /* FOOTER */
 .links{
-    margin-left: 15.5rem;
     bottom: 0;
     align-items: center;
     display: flex;
@@ -220,7 +217,7 @@ main{
   margin-bottom: 1em;
 }
 
-.login-form input[type=text],input[type=password]{
+input[type=text],input[type=password]{
   background-color: inherit;
   font-size: 16px;
   padding: .5em;
@@ -230,12 +227,12 @@ main{
   color: var(--font-primary);
 }
 
-.login-form input[type=text]:focus,input[type=password]:focus{
+input[type=text]:focus,input[type=password]:focus{
   transition: 200ms ease;
     border-bottom: 2px solid rgb(136, 136, 136);
 }
 
-.login-form input[type=submit]{
+input[type=submit]{
   width:100%;
   padding: 1em;
   font-size: 16px;
@@ -247,18 +244,10 @@ main{
   border: none;
 }
 
-.login-form input[type=submit]:hover{
+input[type=submit]:hover{
   opacity: 100%;
   transition: 200ms ease;
 }
-
-.login-form p{
-    text-align: center;
-}
-
-
-
-
 
 /* Sign-up Page */
 .signup-main{
@@ -473,24 +462,18 @@ main{
 
 .main_AU{
     text-align: center;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
 }
 
 .main_AU-text{
     text-indent: 2%;
     text-align: center;
-    
     line-height: 1.5;
     font-size: 16px;
-    max-width: 70ch;
 }
 
 .big-logo img{
     height: 25%;
     width: 25%;
-    max-width: 50em;
 }
 
 .nav-logo{
@@ -694,39 +677,126 @@ main{
 
 
 /* SHOP CSS HERE*/
+.shop-filter{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 5px 40px;
+	list-style: none;
+}
+
+.shop-filter a{
+	text-decoration:none;
+}
+
+.shop-filter li a{
+	padding: 5px 20px;
+	margin: 10px;
+	display: flex;
+	color: var(--font-primary);
+	opacity: 70%;
+}
+
+.shop-filter li a:hover{
+	opacity: 100%;
+}
 
 .item-container{
-    width: fit-content;
+    margin: 7rem;
+
     display: grid;
-    place-items: center;
-    justify-content: center;
     gap: 2rem;
+
     grid-template-columns: 1fr 1fr;
 }
 .item-card{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     text-align: center;
-
+	align-items: center;
     width: 30rem;
     height: 20rem;
 
-    border: #555 solid 2px;
-    border-radius: 0.3rem;
+    border-radius: 1rem;
 }
+
+.item-card img{
+    width: 50%;
+    height: auto;
+}
+
 .item-card-img{
     margin-top: -0.8rem;
-
-    border-radius: 0.15rem 0.15rem 0rem 0rem;
-    border-bottom: #555 solid 1px;
+	width: 30rem;
+    height: 20rem;
 }
+
+.item-desc{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+	align-items: center;
+}
+
+.buy-btn{
+	position: flex;
+	width: 140px;
+	height: 40px;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-family: calibri;
+	left: 50%;
+	margin-top: 2.5rem;
+	border-radius: 20px;
+	color: #FFFFFF;
+	background: var(--bg-primary);
+	display: none;
+	opacity: 70%;
+	text-decoration:none;
+}
+
+.buy-btn:hover{
+	opacity: 100%;
+}
+
 .item-price{
     margin-top: 0.5rem;
     font-size: 1.5rem;
+	display:none;
 }
+
 .item-name{
     font-size: 1.5rem;
+	display:none;
+}
+
+.item-size{
+	margin-top: 0.5rem;
+    font-size: 1.5rem;
+	display:none;
+}
+
+.item-card:hover{
+	background: var(--bg-secondary);
+}
+
+.item-card:hover .item-price{
+	display:flex;
+}
+
+.item-card:hover .item-name{
+	display:flex;
+}
+
+.item-card:hover .item-size{
+	display:flex;
+}
+
+.item-card:hover .buy-btn{
+	display:flex;
 }
 
 /* POST.HTML */
