@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrospect Apparel Co.</title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+    
+    <!-- ICON -->
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+</head>
+<body>
+    
+    <!-- NAVBAR -->
+    <% if(username){%>
+    <%- include ('partials/user-navbar') %>
+    <%} else{ %>
+    <%- include ('partials/navbar') %>\
+    <%} %>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <section>
+            <div class="banner">
+                <img src="../images/web_banner.png" alt="banner-img" class="banner-img">
+            </div>    
+        </section>
+        
+        <section>
+            <div class="collection-list">
+                <div class="collection">
+                    <div class="collection-title">NO DATA</div>
+                    <img class="collection-img" src="../images/product_shot1.jpg" alt="collection-1">  
+                    <img class="collection-img" src="../images/product_shot2.jpg" alt="collection-2">  
+                </div>
+            </div>
+
+            <div class="collection-list">
+                <div class="collection">
+                    <div class="collection-title">NEW LEVELS, NEW DEVILS</div>
+                    <img class="collection-img" src="../images/product_shot3.jpg" alt="collection-3">  
+                </div>
+            </div>
+        </section>          
+
+        <!-- FOOTER -->
+        <%- include ('partials/footer-links') %>
+    </main>
+    
+</body>
+</html>

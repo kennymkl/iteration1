@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Retrospect Apparel Co.</title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <% if(username){%>
+    <%- include ('partials/user-navbar') %>
+    <%} else{ %>
+    <%- include ('partials/navbar') %>\
+    <%} %>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <section>
+            <div class="banner">
+                <img src="images/web_banner.png" alt="banner-img" class="banner-img">
+            </div>    
+        </section>
+		
+		<section>
+			<ul class="shop-filter">
+				<li><a href="#">NEW</a></li> |
+				<li><a href="#">ALL</a></li> |
+				<li><a href="#">SHIRTS</a></li>
+			</ul>
+		</section>
+        
+        <section>
+            <div class="item-container">
+				<!--all items-->
+				<% items.forEach((item) =>{ %> 
+					<form action="add-to-cart" method="post">
+						<div class="item-card"> 
+							<img class="item-card-img" src="/images/<%= item.item_photo %>" alt="<%= item.item_photo %>" >
+							<div class="item-desc">
+								<div class="item-name"> 
+									<%= item.item_name %> 
+									<input type="hidden" name="item_name" value="<%= item.item_name %> ">
+									<input type="hidden" name="item_photo" value="<%= item.item_photo %> ">
+								</div>
+								<div class="item-price"> 
+									<%= item.price %> 
+									<input type="hidden" name="price" value="<%= item.price %>">
+								</div>
+								<div class="item-size">
+									<label for="size">Size: </label>	
+									<select name="size" id="sizes">
+										<% item.availability.forEach((availability) => {%>
+											<option value="<%= availability.size %>"><%= availability.size %></option>
+										<% }); %>
+									</select>
+								</div>
+								<div class="item-quantity">
+									<label for="qty">Qty: </label>
+									<input type="number" name="quantity" value="1" class="quantity" min="1">
+								</div>
+								<button class="buy-btn" type="submit">Add To Cart</button>
+							</div>
+						</div>
+					</form>
+				<%})%>
+            </div>
+        </section>  
+        
+        <!-- FOOTER -->
+        <%- include('partials/footer-links') %>   
+</body>
+</html>

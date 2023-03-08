@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Login - Retrospect Apparel Co.</title>
+
+      <!-- STYLE LINKS -->
+      <link rel="stylesheet" href="style.css">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+      <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+  </head>
+  <body>
+      <!-- NAVBAR -->
+      <%- include('partials/navbar') %>
+
+      <!-- MAIN CONTENT -->
+      <div class="login-main">
+        <div class="login-outer">
+          <h1>Login</h1>
+          <div class="login-wrapper">
+
+            <div class="login-logo"></div>
+              <form class="login-form" action="user-login" method="post">
+                <label for="login-username">Username</label><br>
+                <input type="text" name="username" value=""><br>
+                <label for="login-password">Password</label><br>
+                <input type="password" name="password" value=""><br>
+                <input type="submit" name="login-submit" value="Login">
+                <p>Or <a href="/signup">Create an Account</a></p>
+              </form>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
