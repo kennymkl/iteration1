@@ -19,6 +19,7 @@ const retrospectConnection = mongoose.connect(retrospectDB);
 
 // Initializing session
 const sessionStore = new mongoDBStore({
+    uri: retrospectDB,
     url: retrospectConnection,
     collection: 'sessions'
 });
