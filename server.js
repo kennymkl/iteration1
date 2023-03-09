@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static('./public'));
 
-const retrospectDB = "mongodb+srv://retrospect:Retrosp3ct@cluster0.23cc64y.mongodb.net/retrospectDB";
-const retrospectConnection = mongoose.connect(retrospectDB, {useNewUrlParser: true, useUnifiedTopology: true});
+const retrospectDB = "mongodb+srv://retrospect:Retrosp3ct@retrospect.fboiauc.mongodb.net/retrospectDB";
+const retrospectConnection = mongoose.connect(retrospectDB);
 
 // Initializing session
 const sessionStore = new mongoDBStore({
