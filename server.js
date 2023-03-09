@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static('./public'));
 
-const retrospectDB = "mongodb://localhost:27017/restrospectDB";
+const retrospectDB = "mongodb+srv://retrospect:Retrosp3ct@cluster0.23cc64y.mongodb.net/retrospectDB";
 const retrospectConnection = mongoose.connect(retrospectDB, {useNewUrlParser: true, useUnifiedTopology: true});
 
 // Initializing session
@@ -118,7 +118,7 @@ app.get('/delete-item/:user_id/:item_name/:size', async function(req, res) {
                 size: size
                 }
             }
-        }
+        } 
     );
 
     const cart_items = await UserCartModel.find({user_id: req.session._id});
