@@ -82,12 +82,12 @@ app.get('/about-us', function(req, res){
 // SHOP
 app.get('/shop', async function(req, res){
     let username = null;
+
     if(req.session.isAuth){
         username = req.session.username;
     }
 
     const items = await ItemsModel.find({});
-    console.log(items);
 
     res.render('shop',{
         username: username,
@@ -122,15 +122,19 @@ app.get('/delete-item/:user_id/:item_name/:size', async function(req, res) {
         } 
     );
 
-    const cart_items = await UserCartModel.find({user_id: req.session._id});
-    console.log(cart_items);
-
     res.redirect('/shopping-cart');
 
 });
 
 //ADD ITEM TO USER CART
 app.post('/add-to-cart', async function(req, res){
+
+    if(req.session.isAuth == undefined){
+        console.log("Need Account Before adding to cart");
+        return res.render('login', {
+            msg: "Need Account Before adding to cart. We apologize for the Inconvenience."
+        });
+    }
 
     const items = await ItemsModel.find({});
 
@@ -178,10 +182,9 @@ app.post('/add-to-cart', async function(req, res){
             {user_id: req.session._id},
             {$push: {items: item}}
         );
-        console.log("added item: " + user_cart);
     }
     
-    res.redirect('/shop');
+    return res.redirect('/shop');
 });
 
 
@@ -198,7 +201,8 @@ app.get('/size-chart', function(req, res){
 
 // LOGIN
 app.get('/login', function(req, res){
-    res.render('login');
+    const msg = null;
+    res.render('login', {msg: msg});
 });
 app.post('/user-login', async function(req, res){
 
@@ -234,7 +238,8 @@ app.get('/log-out', function(req, res){
         req.session.destroy((err) => {
             if (err) throw err;
 
-            console.log('log out success!')
+            console.log(req.session);
+            console.log('log out success!');
             res.redirect('/landing-page');
         })
     }

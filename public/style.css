@@ -73,7 +73,13 @@ main{
     margin-bottom: 10rem;
 }
 .nav-bot{
-    margin-top: 120%;
+    margin-top: auto;
+    margin-bottom: 10rem;
+}
+.nav-item{
+    margin-left: 2.5rem;
+    margin-top: 1rem;
+    width: auto;
 }
 .navbar-link{
     display: flex;
@@ -93,9 +99,9 @@ main{
 }
 .nav-user{
     color: #FFFFFF;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-left: 2rem;
-    margin-bottom: 0.5  rem;
+    margin-bottom: 0.75  rem;
 }
 @media only screen and (max-width: 800px){
     .navbar{
@@ -256,6 +262,32 @@ input[type=submit]{
 input[type=submit]:hover{
   opacity: 100%;
   transition: 200ms ease;
+}
+
+.error-msg{
+    border-radius: 2rem;
+    position: absolute;
+    top: 0;
+
+    margin: 1rem;
+    padding: 2rem;
+    background-color: rgba( 0, 0, 0, 0.90);
+
+    font-size: 1rem;
+}
+.error-msg-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    
+    text-align: center;
+    background-color: #850101;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0.2rem;
+
+    cursor: pointer;
 }
 
 /* Sign-up Page */
