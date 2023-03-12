@@ -20,6 +20,14 @@
 
     <!-- MAIN CONTENT -->
     <div class="signup-main">
+		<!-- ERROR MSG -->
+		<% if(msg){ %>
+			<div class="error-msg" id="error-msg">
+				<%= msg %>
+				<div class="error-msg-btn" onclick="hideMSG()">x</div>
+			</div>
+		<% } %>
+
 		<div class="signupform-content">
 			<div class="form-left">
 				<img src="../images/retrospect-logo.png" alt="form">
@@ -92,5 +100,13 @@
 		  	}
 		});
 	</script>
+
+	<!-- Hides the error message -->
+	<script> 
+        function hideMSG(){
+          const msg = document.getElementById("error-msg");
+          msg.style.display = "none";
+        }
+    </script> 
 </body>
 </html>

@@ -202,31 +202,24 @@ app.get('/size-chart', function(req, res){
 // LOGIN
 app.get('/login', function(req, res){
     const msg = null;
-    res.render('login', {msg: msg});
+    res.render('login', {msg: msg}); // Will store error message if needed
 });
 app.post('/user-login', async function(req, res){
 
     const { username, password } = req.body;
-    console.log(username + " " + password);
     
     let users = await UserModel.findOne({ username: username});
-    // check if there is an existing user and if password is correct
-    if(!users){
-        console.log('No user found');
-        return res.redirect('/login');
-    } 
-
     const hashedPassword = createHash('sha256').update(password).digest('hex');
-    if (users.password !== hashedPassword){
-        console.log('Wrong password');
-        return res.redirect('/login');
-    }
+    // check if there is an existing user and if password is correct
+    if(!users || users.password !== hashedPassword){
+        return res.render('login',{msg: "Wrong Username or Password."});
+    } 
 
     req.session.isAuth = true;
     res.session = users;
     req.session._id = users._id;
     req.session.username = users.username;
-    console.log(req.session);
+
     console.log('log in successful!');
     return res.redirect('/landing-page');
 });
@@ -248,7 +241,8 @@ app.get('/log-out', function(req, res){
 
 // SIGN UP
 app.get('/signup', function(req, res){
-    res.render('signup');
+    const msg = null;
+    res.render('signup', {msg: msg}); // Will store error message if needed
 });
 app.post('/create-user', async function(req, res){
 
@@ -259,19 +253,19 @@ app.post('/create-user', async function(req, res){
     // Validation if there is already an existing record with same username
     if (takenUsername) {
         console.log('taken username');
-        return res.redirect('/signup');
+        return res.render('signup',{msg: "Username already taken"});
     }
     const takenEmail = await UserModel.findOne({ email: your_email});
     // Validation if there is already an existing record with same email
     if (takenEmail) {
         console.log('taken email');
-        return res.redirect('/signup');
+        return res.render('signup',{msg: "Email already taken"});
     }
     
     // Validation if passwords match
     if( password !== confirm_password){
         console.log('passwords do not match ' + password + ' - ' + confirm_password);
-        return res.redirect('/signup');
+        return res.render('signup',{msg: "Passwords do not match"});
     }
     const hashedPassword = createHash('sha256').update(password).digest('hex');
 
@@ -291,7 +285,7 @@ app.post('/create-user', async function(req, res){
     await newUserCart.save();
 
     console.log('success!')
-    return res.redirect('login');
+    return res.render('login',{msg: "You may now log in"});
 });
 
 
