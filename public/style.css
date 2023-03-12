@@ -265,15 +265,17 @@ input[type=submit]:hover{
 }
 
 .error-msg{
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     position: absolute;
     top: 0;
 
     margin: 1rem;
     padding: 2rem;
-    background-color: rgba( 0, 0, 0, 0.90);
+    background-color: rgba(160, 0, 0, 0.9);
 
     font-size: 1rem;
+
+    z-index: 99 !important; /* makes it go on top of everything  */
 }
 .error-msg-btn {
     position: absolute;
@@ -281,7 +283,7 @@ input[type=submit]:hover{
     right: 0;
     
     text-align: center;
-    background-color: #850101;
+
     border-radius: 50%;
     width: 1.5rem;
     height: 1.5rem;
