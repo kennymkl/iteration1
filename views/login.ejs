@@ -19,6 +19,15 @@
 
       <!-- MAIN CONTENT -->
       <div class="login-main">
+
+        <% if(msg){ %>
+          <div class="error-msg" id="error-msg">
+          <%= msg %>
+          <div class="error-msg-btn" onclick="hideMSG()">x</div>
+        </div>
+        <% } %>
+        
+
         <div class="login-outer">
           <h1>Login</h1>
           <div class="login-wrapper">
@@ -35,5 +44,12 @@
           </div>
         </div>
       </div>
+
+      <script>
+        function hideMSG(){
+          const msg = document.getElementById("error-msg");
+          msg.style.display = "none";
+        }
+      </script>
   </body>
 </html>

@@ -28,19 +28,19 @@
 			<form class="form-detail" action="/create-user" method="post" id="myform">
 				<div class="form-row">
 					<label for="username">USERNAME</label>
-					<input type="text" name="username" id="username" class="input-text">
+					<input type="text" name="username" id="username" class="input-text" required="true">
 				</div>
 				<div class="form-row">
 					<label for="your_email">E-MAIL</label>
-					<input type="text" name="your_email" id="your_email" class="input-text" required="" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" aria-required="true">
+					<input type="text" name="your_email" id="your_email" class="input-text" required="true" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" aria-required="true">
 				</div>
 				<div class="form-row">
 					<label for="password">PASSWORD</label>
-					<input type="password" name="password" id="password" class="input-text" required="" aria-required="true">
+					<input type="password" name="password" id="password" class="input-text" required="true" aria-required="true">
 				</div>
 				<div class="form-row">
 					<label for="confirm_password">CONFIRM PASSWORD</label>
-					<input type="password" name="confirm_password" id="confirm_password" class="input-text" required="" aria-required="true">
+					<input type="password" name="confirm_password" id="confirm_password" class="input-text" required="true" aria-required="true">
 				</div>
 				<div class="form-row-last">
 					<input type="submit" name="register" class="register" value="Register">
