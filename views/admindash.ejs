@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Retrospect Apparel Co.</title>
+
+        <!-- STYLE LINKS -->
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+        
+        <!-- ICON -->
+        <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+    </head>
+
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <div class="navbar-title">Retrospect</div>
+            </div>
+            
+            <ul class="navbar-nav">
+                <li class="navbar-item"><a href="/landing-page" class="navbar-link">Home</a></li>
+                <li class="navbar-item"><a href="shop.html" class="navbar-link">Shop</a> </li>
+                <li class="navbar-item"><a href="blog.html" class="navbar-link">Blog</a> </li>
+                <li class="navbar-item"><a href="size-chart.html" class="navbar-link">Size Chart</a> </li>
+                <li class="navbar-item"><a href="about-us.html" class="navbar-link">About Us</a></li>
+                <li class="navbar-item"><a href="login.html" class="navbar-link">Login</a></li>
+                <li class="navbar-item"><a href="signup.html" class="navbar-link">Sign Up</a></li>
+                <li class="navbar-item">
+                    <a href="shopping-cart.html" class="navbar-link">
+                        <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill="white"></path> </svg>  
+                        Shopping Cart
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="admin-dash">
+            <h1>Seller Dashboard</h1>
+            <h2>Inventory Management</h2>
+
+            <!-- INVENTORY TRACKING -->
+            <div class="inventory-tracking admin-sec">
+                
+                <div class="admin-card"> 
+                    <h3>No Data - White</h3>
+                    <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
+                    <ul>
+                        <li>250 php</li>
+                        <li>50 in stock</li>
+                    </ul>
+                    <input type="button" name="inv-edit" value="edit"></input>
+                    <input type="button" name="inv-del" value="delete"></input>
+                </div>
+
+                <div class="admin-card"> 
+                    <h2>No Data - White</h2>
+                    <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
+                    <ul>
+                        <li>250 php</li>
+                        <li>50 in stock</li>
+                    </ul>
+                    <input type="button" name="inv-edit" value="edit"></input>
+                    <input type="button" name="inv-del" value="delete"></input>
+                </div>
+
+                <div class="admin-card"> 
+                    <h2>No Data - White</h2>
+                    <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
+                    <ul>
+                        <li>250 php</li>
+                        <li>50 in stock</li>
+                    </ul>
+                    <input type="button" name="inv-edit" value="edit"></input>
+                    <input type="button" name="inv-del" value="delete"></input>
+                </div>
+
+                <div class="admin-card"> 
+                    <h2>No Data - White</h2>
+                    <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
+                    <ul>
+                        <li>250 php</li>
+                        <li>50 in stock</li>
+                    </ul>
+                    <input type="button" name="inv-edit" value="edit"></input>
+                    <input type="button" name="inv-del" value="delete"></input>
+                </div>
+
+                <div class="admin-card additem"> 
+                    <input type="button" name="inv-edit" value="ADD ITEM"></input>
+
+                </div>
+
+            </div>
+
+            <h2>Admin User Management</h2>
+            <div class="admin-UM admin-sec">
+                <div class="admin-card"> 
+                    <h2>Username 1</h2>
+
+                    <input type="button" name="delete-user" value="Delete User"></input>
+                    <input type="button" name="reset-pass" value="Reset Password"></input>
+                </div>
+            </div>
+
+            <h2>Current Orders</h2>
+            <div class="current-orders admin-sec">
+                <div class="admin-card"> 
+                    <h2>Username 1</h2>
+                    <h3>Order #xxxx</h3>
+                    <h3>Status: Received</h3>
+                    <input type="button" name="revert-status" value="Revert Status"></input>
+                    <input type="button" name="advance-status" value="Advance Status"></input>
+                    <input type="button" name="order-cancel" value="Cancel Order"></input>
+                </div>
+            </div>
+        </main>
+    </body>
+
+</html>

@@ -18,11 +18,14 @@ body{
 /* Customized Scrollbar */
 body::-webkit-scrollbar{
     width: 0.5rem;
+    height: 0.5rem;
 }
 body::-webkit-scrollbar-thumb{
     background: var(--bg-secondary);
     border-radius: 0.5rem;
 }
+
+
 
 main{
     margin-left: 15.5rem;
@@ -924,3 +927,50 @@ input[type=submit]:hover{
     margin-left: 0.5rem;
     margin-bottom: 1.5rem;
 }
+
+
+/*Admin Dash*/
+
+.admin-dash{
+    padding: 2rem;
+}
+
+.admin-sec{
+    margin-top: 2rem;
+}
+
+.admin-dash h1{
+    margin-bottom: 5rem;
+}
+
+.inventory-tracking{
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+
+    
+}
+
+
+
+.admin-card{
+    background-color: var(--bg-secondary);
+    color: var(--font-primary);
+    max-width: 30rem;
+    height: fit-content;
+    display: grid;
+    padding: 1rem;
+    margin: 1rem;
+    
+    border-radius: 1rem;
+}
+
+.add-item{
+    
+}
+
+.inv-item-card{
+    width: auto;
+    height: 15rem;
+}
+
