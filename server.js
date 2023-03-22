@@ -27,9 +27,6 @@ app.use(session({
     secret: 'some secret ya foo',
     resave: false,
     saveUninitialized: true,
-    cookie:{
-        maxAge: 360000
-    },
     store: sessionStore
 }));
 const isAuth = (req, res, next) => {
@@ -50,6 +47,7 @@ const UserCartModel = require('./models/user_cartDB');
 const ItemsModel = require('./models/itemsDB');
 const OrdersModel = require('./models/ordersDB');
 const { findOneAndDelete } = require('./models/user_cartDB');
+const items = require('./models/itemsDB');
 
 // LANDING PAGE
 app.get('/', function(req, res){
@@ -134,7 +132,6 @@ app.get('/delete-item/:user_id/:item_name/:size', async function(req, res) {
     );
 
     res.redirect('/shopping-cart');
-
 });
 
 //ADD ITEM TO USER CART
@@ -172,7 +169,7 @@ app.post('/add-to-cart', async function(req, res){
     });
     console.log("find_item: " + find_item);
 
-    if(find_item) { // IF ITEMS EXIST
+    if(find_item) { // IF ITEMS EXIST JUST ADD CURRENT ITEM
         const user_cart = await UserCartModel.updateOne({
                 user_id: req.session._id,
                 items: {
@@ -199,9 +196,41 @@ app.post('/add-to-cart', async function(req, res){
 });
 
 // ORDER CHECKOUT
-app.get('checkout', function(req, res) {
+app.get('/checkout/:username', async function(req, res) {
+
+    const username = req.params.username;
+
+    const user_cart = await UserCartModel.findOne({username: username});
+
+    user_cart.items.forEach((item) => {
+        console.log(item + "\n");
+
+    });
+
+    // If there are no items in the cart then create a new order
+    if(user_cart.items.length == 0){
+        return res.redirect('/shopping-cart');
+    }
+
     
-    res.redirect('/shopping-cart');
+    const newOrder = await OrdersModel({
+        user_id: req.session._id,
+        username: req.session.username,
+        items: user_cart.items
+    });
+    console.log(newOrder.items);
+    await newOrder.save();
+
+    const deleteditems = await UserCartModel.updateOne(
+        {user_id: req.session._id},
+        {$pullAll: {
+            items: user_cart.items
+            }
+        } 
+    );
+    console.log()
+
+    return res.redirect('/shopping-cart');
 });
 
 // SIZE CHART
@@ -210,7 +239,7 @@ app.get('/size-chart', function(req, res){
     if(req.session.isAuth){
         user = req.session;
     }
-    res.render('size-chart', {
+    return res.render('size-chart', {
         user: user
     });
 });
@@ -218,7 +247,7 @@ app.get('/size-chart', function(req, res){
 // LOGIN
 app.get('/login', function(req, res){
     const msg = null;
-    res.render('login', {msg: msg}); // Will store error message if needed
+    return res.render('login', {msg: msg}); // Will store error message if needed
 });
 app.post('/user-login', async function(req, res){
 
@@ -250,7 +279,7 @@ app.get('/log-out', function(req, res){
 
             console.log(req.session);
             console.log('log out success!');
-            res.redirect('/landing-page');
+            return res.redirect('/landing-page');
         })
     }
     
@@ -259,7 +288,7 @@ app.get('/log-out', function(req, res){
 // SIGN UP
 app.get('/signup', function(req, res){
     const msg = null;
-    res.render('signup', {msg: msg}); // Will store error message if needed
+    return res.render('signup', {msg: msg}); // Will store error message if needed
 });
 app.post('/create-user', async function(req, res){
 
