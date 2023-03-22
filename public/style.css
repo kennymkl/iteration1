@@ -177,6 +177,7 @@ main{
 }
 /* FOOTER */
 .links{
+    margin-top: 5rem;
     bottom: 0;
     align-items: center;
     display: flex;
@@ -963,10 +964,6 @@ input[type=submit]:hover{
     margin: 1rem;
     
     border-radius: 1rem;
-}
-
-.add-item{
-    
 }
 
 .inv-item-card{

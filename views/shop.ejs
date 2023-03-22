@@ -16,11 +16,13 @@
 <body>
 
     <!-- NAVBAR -->
-    <% if(username){%>
-    <%- include ('partials/user-navbar') %>
-    <%} else{ %>
-    <%- include ('partials/navbar') %>\
-    <%} %>
+    <% if(user){                                    %>
+	<%      if(user.user_type == 0) {               %>
+	<%-         include ('partials/user-navbar')    %>
+	<%      }                                       %>
+	<%} else{                                       %>
+	<%-     include ('partials/navbar')             %>
+	<%}                                             %>
 	
 		
     <!-- MAIN CONTENT -->
@@ -46,7 +48,7 @@
 				<% items.forEach((item) =>{ %> 
 					<form action="add-to-cart" method="post">
 						<div class="item-card"> 
-							<img class="item-card-img" src="/images/<%= item.item_photo %>" alt="<%= item.item_photo %>" >
+							<img class="item-card-img" src="/images/items/<%= item.item_photo %>" alt="<%= item.item_photo %>" >
 							<div class="item-desc">
 								<div class="item-name"> 
 									<%= item.item_name %> 

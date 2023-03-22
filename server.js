@@ -27,6 +27,9 @@ app.use(session({
     secret: 'some secret ya foo',
     resave: false,
     saveUninitialized: true,
+    cookie:{
+        maxAge: 360000
+    },
     store: sessionStore
 }));
 const isAuth = (req, res, next) => {
@@ -45,63 +48,71 @@ app.use(function(req, res, next) {
 const UserModel = require('./models/userDB');
 const UserCartModel = require('./models/user_cartDB');
 const ItemsModel = require('./models/itemsDB');
+const OrdersModel = require('./models/ordersDB');
 const { findOneAndDelete } = require('./models/user_cartDB');
 
 // LANDING PAGE
 app.get('/', function(req, res){
-    let username = null;
+    let user = null;
+    
     if(req.session.isAuth){
-        username = req.session.username;
+        user = req.session;
     }
     res.render('landing-page', {
-        username: username
+        user: user
     });
 });
 app.get('/landing-page', function(req, res){
-    let username = null;
+    let user = null;
+
     if(req.session.isAuth){
-        username = req.session.username;
+        user = req.session;
     }
     res.render('landing-page',{
-        username: username
+        user: user
     });
     
 });
 
 // ABOUT US
 app.get('/about-us', function(req, res){
-    let username = null;
+    let user = null;
     if(req.session.isAuth){
-        username = req.session.username;
+        user = req.session;
     }
     res.render('about-us',{
-        username: username
+        user: user
     });
 });
 
 // SHOP
 app.get('/shop', async function(req, res){
-    let username = null;
-
+    let user = null;
     if(req.session.isAuth){
-        username = req.session.username;
+        user = req.session;
     }
 
     const items = await ItemsModel.find({});
 
     res.render('shop',{
-        username: username,
+        user: user,
         items: items
     });
 });
 
 // SHOPPING-CART
 app.get('/shopping-cart', async function(req, res){
+
+    let user = null;
+    if(req.session.isAuth){
+        user = req.session;
+    }
     
     const cart_items = await UserCartModel.find({user_id: req.session._id});
     console.log(cart_items);
 
     res.render('shopping-cart', {
+        user: user,
         cart_items: cart_items,
         username: req.session.username
     })
@@ -187,15 +198,20 @@ app.post('/add-to-cart', async function(req, res){
     return res.redirect('/shop');
 });
 
+// ORDER CHECKOUT
+app.get('checkout', function(req, res) {
+    
+    res.redirect('/shopping-cart');
+});
 
 // SIZE CHART
 app.get('/size-chart', function(req, res){
-    let username = null;
+    let user = null;
     if(req.session.isAuth){
-        username = req.session.username;
+        user = req.session;
     }
     res.render('size-chart', {
-        username: username
+        user: user
     });
 });
 
@@ -219,6 +235,7 @@ app.post('/user-login', async function(req, res){
     res.session = users;
     req.session._id = users._id;
     req.session.username = users.username;
+    req.session.user_type = users.user_type;
 
     console.log('log in successful!');
     return res.redirect('/landing-page');
@@ -271,6 +288,7 @@ app.post('/create-user', async function(req, res){
 
     const newUser = await UserModel({
         username: username,
+        user_type: 0,
         email: your_email,
         password: hashedPassword
     });

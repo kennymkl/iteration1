@@ -15,12 +15,15 @@
     <script src="https://kit.fontawesome.com/679532c273.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <!-- NAVBAR -->
-    <% if(username){%>
-    <%- include ('partials/user-navbar') %>
-    <%} else{ %>
-    <%- include ('partials/navbar') %>\
-    <%} %>
+    <% if(user){                                    %>
+    <%      if(user.user_type == 0) {               %>
+    <%-         include ('partials/user-navbar')    %>
+    <%      }                                       %>
+    <%} else{                                       %>
+    <%- include ('partials/navbar')                 %>
+    <%}                                             %>
 
     <!-- MAIN CONTENT -->
     <main class = "main_AU">
