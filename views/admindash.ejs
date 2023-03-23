@@ -76,6 +76,8 @@
                   </div>
                 </div>
 
+
+
                 <div class="admin-card additem">
                     <input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal"></input>
                 </div>
@@ -110,8 +112,8 @@
                 <div class="admin-card additem">
                     <input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal-add-user"></input>
                 </div>
-                <div class="admin-add-modal" id="admin-add-modal">
-                  <div class="admin-add-modal-content">
+                <div class="item-edit-modal" id="admin-add-modal">
+                  <div class="item-edit-modal-content">
                     <form class=admin-add-form action="add-admin" method="POST">
                       <label for="admin-name"> Username Name<label><br>
                       <input type="text" name="admin-name" value=""><br>
@@ -140,12 +142,13 @@
 
     <script>
       var modal = document.getElementById("item-modal");
-      var addmodal = document.getElementById("item-add-modal");
+      var addModal = document.getElementById("item-add-modal");
+      var addUserModal = document.getElementById("admin-add-modal");
 
       // Get the button that opens the modal
       var btn = document.getElementById("myBtn");
       var btnAdd = document.getElementById("myBtn-modal");
-
+      var btnAddUser = document.getElementById("myBtn-modal-add-user");
       // Get the <span> element that closes the modal
       var span = document.querySelector('.close');
 
@@ -154,7 +157,10 @@
         modal.style.display = "block";
       }
       btnAdd.onclick = function() {
-        addmodal.style.display = "block";
+        addModal.style.display = "block";
+      }
+      btnAddUser.onclick = function() {
+        addUserModal.style.display = "block";
       }
 
 
