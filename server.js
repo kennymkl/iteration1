@@ -52,7 +52,7 @@ const items = require('./models/itemsDB');
 // LANDING PAGE
 app.get('/', function(req, res){
     let user = null;
-    
+
     if(req.session.isAuth){
         user = req.session;
     }
@@ -69,7 +69,7 @@ app.get('/landing-page', function(req, res){
     res.render('landing-page',{
         user: user
     });
-    
+
 });
 
 // ABOUT US
@@ -105,7 +105,7 @@ app.get('/shopping-cart', async function(req, res){
     if(req.session.isAuth){
         user = req.session;
     }
-    
+
     const cart_items = await UserCartModel.find({user_id: req.session._id});
     console.log(cart_items);
 
@@ -128,7 +128,7 @@ app.get('/delete-item/:user_id/:item_name/:size', async function(req, res) {
                 size: size
                 }
             }
-        } 
+        }
     );
 
     res.redirect('/shopping-cart');
@@ -155,7 +155,7 @@ app.post('/add-to-cart', async function(req, res){
     console.log("Size: " + size);
     console.log("Qty: " + quantity);
     console.log("Total Price: " + total_price);
-    
+
     const item =  {item_name, item_photo, price, size, quantity, total_price}
 
     const find_item = await UserCartModel.findOne({
@@ -191,7 +191,7 @@ app.post('/add-to-cart', async function(req, res){
             {$push: {items: item}}
         );
     }
-    
+
     return res.redirect('/shop');
 });
 
@@ -212,7 +212,7 @@ app.get('/checkout/:username', async function(req, res) {
         return res.redirect('/shopping-cart');
     }
 
-    
+
     const newOrder = await OrdersModel({
         user_id: req.session._id,
         username: req.session.username,
@@ -226,7 +226,7 @@ app.get('/checkout/:username', async function(req, res) {
         {$pullAll: {
             items: user_cart.items
             }
-        } 
+        }
     );
     console.log()
 
@@ -252,13 +252,13 @@ app.get('/login', function(req, res){
 app.post('/user-login', async function(req, res){
 
     const { username, password } = req.body;
-    
+
     let users = await UserModel.findOne({ username: username});
     const hashedPassword = createHash('sha256').update(password).digest('hex');
     // check if there is an existing user and if password is correct
     if(!users || users.password !== hashedPassword){
         return res.render('login',{msg: "Wrong Username or Password."});
-    } 
+    }
 
     req.session.isAuth = true;
     res.session = users;
@@ -282,7 +282,7 @@ app.get('/log-out', function(req, res){
             return res.redirect('/landing-page');
         })
     }
-    
+
 });
 
 // SIGN UP
@@ -307,7 +307,7 @@ app.post('/create-user', async function(req, res){
         console.log('taken email');
         return res.render('signup',{msg: "Email already taken"});
     }
-    
+
     // Validation if passwords match
     if( password !== confirm_password){
         console.log('passwords do not match ' + password + ' - ' + confirm_password);
@@ -326,14 +326,26 @@ app.post('/create-user', async function(req, res){
     //create cart for the user
     const newUserCart = await UserCartModel({
         user_id: newUser,
-        username: username, 
+        username: username,
         items: []
-    }); 
+    });
     await newUserCart.save();
 
     console.log('success!')
     return res.render('login',{msg: "You may now log in"});
 });
 
+
+app.get('/admin', function(req, res){
+    let user = null;
+
+    if(req.session.isAuth){
+        user = req.session;
+    }
+    res.render('admindash',{
+        user: user
+    });
+
+});
 
 app.listen(3000, () => console.log('Server started on port 3000'));

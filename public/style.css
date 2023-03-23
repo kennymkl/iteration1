@@ -139,7 +139,7 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
 .banner-img{
     flex-shrink: 0;
@@ -153,7 +153,7 @@ main{
 .collection-list{
     margin-top: 6rem;
     margin-bottom: 3rem;
-    
+
     align-items: center;
     display: flex;
     justify-content: center;
@@ -292,7 +292,7 @@ input[type=submit]:hover{
     position: absolute;
     top: 0;
     right: 0;
-    
+
     text-align: center;
 
     border-radius: 50%;
@@ -557,7 +557,7 @@ input[type=submit]:hover{
 
 .project{
     display: flex;
-    
+
 }
 
 .shop{
@@ -918,7 +918,7 @@ input[type=submit]:hover{
 .post-date{
     color: gray;
     font-size: 1rem;
-    
+
     margin-bottom: 2rem;
     margin-left: 0.5rem;
 }
@@ -949,7 +949,7 @@ input[type=submit]:hover{
     flex-direction: row;
     flex-wrap:wrap;
 
-    
+
 }
 
 
@@ -962,7 +962,7 @@ input[type=submit]:hover{
     display: grid;
     padding: 1rem;
     margin: 1rem;
-    
+
     border-radius: 1rem;
 }
 
@@ -971,3 +971,28 @@ input[type=submit]:hover{
     height: 15rem;
 }
 
+.item-edit-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  width: 100%;/* Full width */
+  height: 100%; /* Full height */
+  left: 0;
+  top: 0;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+
+}
+
+.item-edit-modal-content{
+  filter: drop-shadow(0 0 0.75rem var(--font-primary));
+  position: fixed;
+  overflow: auto;
+  padding: 1rem;
+  width: 50%;
+  height: 50%;
+  transform: translate(50%, 50%);
+  border-radius: 1rem;
+  background-color: var(--bg-secondary); /* Fallback color */
+}

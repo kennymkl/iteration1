@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
-        
+
         <!-- ICON -->
         <link rel="icon" href="images/retrospect-icon.png" type="image/png">
     </head>
@@ -22,7 +22,7 @@
             <div class="navbar-logo">
                 <div class="navbar-title">Retrospect</div>
             </div>
-            
+
             <ul class="navbar-nav">
                 <li class="navbar-item"><a href="/landing-page" class="navbar-link">Home</a></li>
                 <li class="navbar-item"><a href="shop.html" class="navbar-link">Shop</a> </li>
@@ -33,7 +33,7 @@
                 <li class="navbar-item"><a href="signup.html" class="navbar-link">Sign Up</a></li>
                 <li class="navbar-item">
                     <a href="shopping-cart.html" class="navbar-link">
-                        <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill="white"></path> </svg>  
+                        <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16"> <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill="white"></path> </svg>
                         Shopping Cart
                     </a>
                 </li>
@@ -46,19 +46,37 @@
 
             <!-- INVENTORY TRACKING -->
             <div class="inventory-tracking admin-sec">
-                
-                <div class="admin-card"> 
-                    <h3>No Data - White</h3>
-                    <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
+
+                <div class="admin-card">
+                    <h2>No Data - White</h2>
+                    <img src="../images/items/Shirt.png" alt="shirt pic" class="inv-item-card">
                     <ul>
                         <li>250 php</li>
                         <li>50 in stock</li>
                     </ul>
-                    <input type="button" name="inv-edit" value="edit"></input>
+                    <input type="button" name="inv-edit" value="edit" id="myBtn"></input>
                     <input type="button" name="inv-del" value="delete"></input>
                 </div>
 
-                <div class="admin-card"> 
+                <div class="item-edit-modal" id="item-modal">
+                  <div class="item-edit-modal-content">
+                    Hello its me
+                    <form class=item-edit-form action="update-item" method="POST">
+                      <label for="product-name"> Product Name<label><br>
+                      <input type="text" name="product-name" value=""><br>
+                      <label for="product-photo"> Product Photo<label><br>
+                      <input type="button" name="product-photo" value="Upload"><br>
+                      <label for="product-price"> Unit price<label><br>
+                      <input type="text" name="product-price" value=""><br>
+                      <label for="product-stock"> Stock Amount<label><br>
+                      <input type="number" name="product-stock" value=""><br>
+                      <input type="submit" name="product-save" value="Save Changes">
+                      <button type="button" class="close">Close</button>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="admin-card">
                     <h2>No Data - White</h2>
                     <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
                     <ul>
@@ -69,7 +87,7 @@
                     <input type="button" name="inv-del" value="delete"></input>
                 </div>
 
-                <div class="admin-card"> 
+                <div class="admin-card">
                     <h2>No Data - White</h2>
                     <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
                     <ul>
@@ -80,7 +98,7 @@
                     <input type="button" name="inv-del" value="delete"></input>
                 </div>
 
-                <div class="admin-card"> 
+                <div class="admin-card">
                     <h2>No Data - White</h2>
                     <img src="../images/Shirt.png" alt="shirt pic" class="inv-item-card">
                     <ul>
@@ -91,26 +109,57 @@
                     <input type="button" name="inv-del" value="delete"></input>
                 </div>
 
-                <div class="admin-card additem"> 
-                    <input type="button" name="inv-edit" value="ADD ITEM"></input>
-
+                <div class="admin-card additem">
+                    <input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal"></input>
                 </div>
+                <div class="item-edit-modal" id="item-add-modal">
+                  <div class="item-edit-modal-content">
+                    <form class=item-edit-form action="add-item" method="POST">
+                      <label for="product-name"> Product Name<label><br>
+                      <input type="text" name="product-name" value=""><br>
+                      <label for="product-photo"> Product Photo<label><br>
+                      <input type="button" name="product-photo" value="Upload"><br>
+                      <label for="product-price"> Unit price<label><br>
+                      <input type="text" name="product-price" value=""><br>
+                      <label for="product-stock"> Stock Amount<label><br>
+                      <input type="number" name="product-stock" value=""><br>
+                      <input type="submit" name="product-add" value="Add Item">
+                      <button type="button" class="close">Close</button>
+                    </form>
+                  </div>
+                </div>
+
 
             </div>
 
             <h2>Admin User Management</h2>
             <div class="admin-UM admin-sec">
-                <div class="admin-card"> 
+                <div class="admin-card">
                     <h2>Username 1</h2>
 
                     <input type="button" name="delete-user" value="Delete User"></input>
                     <input type="button" name="reset-pass" value="Reset Password"></input>
                 </div>
+                <div class="admin-card additem">
+                    <input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal-add-user"></input>
+                </div>
+                <div class="admin-add-modal" id="admin-add-modal">
+                  <div class="admin-add-modal-content">
+                    <form class=admin-add-form action="add-admin" method="POST">
+                      <label for="admin-name"> Username Name<label><br>
+                      <input type="text" name="admin-name" value=""><br>
+                      <label for="admin-pass"> Admin Password<label><br>
+                      <input type="text" name="admin-password" value=""><br>
+                      <input type="submit" name="admin-add" value="Create Admin User">
+                      <button type="button" class="close">Close</button>
+                    </form>
+                  </div>
+                </div>
             </div>
 
             <h2>Current Orders</h2>
             <div class="current-orders admin-sec">
-                <div class="admin-card"> 
+                <div class="admin-card">
                     <h2>Username 1</h2>
                     <h3>Order #xxxx</h3>
                     <h3>Status: Received</h3>
@@ -121,5 +170,32 @@
             </div>
         </main>
     </body>
+
+    <script>
+      var modal = document.getElementById("item-modal");
+      var addmodal = document.getElementById("item-add-modal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+      var btnAdd = document.getElementById("myBtn-modal");
+
+      // Get the <span> element that closes the modal
+      var span = document.querySelector('.close');
+
+      // When the user clicks on the button, open the modal
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+      btnAdd.onclick = function() {
+        addmodal.style.display = "block";
+      }
+
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+    </script>
 
 </html>
