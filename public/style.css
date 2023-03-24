@@ -84,6 +84,9 @@ main{
     margin-top: 1rem;
     width: auto;
 }
+#shopping-cart{
+    margin-bottom: -1rem;
+}
 .navbar-link{
     display: flex;
     align-items: center;

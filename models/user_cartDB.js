@@ -9,9 +9,8 @@ const usercartSchema = new mongoose.Schema({
         item_name: {type: String, required: true},
         price: {type: Number, required: true},
         size: {type: String, required: true},
-        quantity: {type: Number, required: true},
-        total_price: {type: Number, required: true}
-    }],
+        quantity: {type: Number, required: true}
+    }]
 }); 
 
 const usercart = mongoose.model('usercart', usercartSchema);

@@ -196,16 +196,12 @@ app.post('/add-to-cart', async function(req, res){
 });
 
 // ORDER CHECKOUT
-app.get('/checkout/:username', async function(req, res) {
+app.get('/checkout/:username/:total_price', async function(req, res) {
 
     const username = req.params.username;
+    const total_price = req.params.total_price;
 
     const user_cart = await UserCartModel.findOne({username: username});
-
-    user_cart.items.forEach((item) => {
-        console.log(item + "\n");
-
-    });
 
     // If there are no items in the cart then create a new order
     if(user_cart.items.length == 0){
@@ -216,7 +212,8 @@ app.get('/checkout/:username', async function(req, res) {
     const newOrder = await OrdersModel({
         user_id: req.session._id,
         username: req.session.username,
-        items: user_cart.items
+        items: user_cart.items,
+        total_price: total_price
     });
     console.log(newOrder.items);
     await newOrder.save();
