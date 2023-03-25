@@ -167,7 +167,6 @@ app.post('/add-to-cart', async function(req, res){
             }
         }
     });
-    console.log("find_item: " + find_item);
 
     if(find_item) { // IF ITEMS EXIST JUST ADD CURRENT ITEM
         const user_cart = await UserCartModel.updateOne({
@@ -184,7 +183,6 @@ app.post('/add-to-cart', async function(req, res){
                     "items.$.total_price": total_price
                 }
             });
-        console.log("updated item: " + user_cart);
     } else { // IF ITEM DOES NOT EXIST
         const user_cart = await UserCartModel.updateOne(
             {user_id: req.session._id},
@@ -215,7 +213,6 @@ app.get('/checkout/:username/:total_price', async function(req, res) {
         items: user_cart.items,
         total_price: total_price
     });
-    console.log(newOrder.items);
     await newOrder.save();
 
     const deleteditems = await UserCartModel.updateOne(
@@ -225,7 +222,6 @@ app.get('/checkout/:username/:total_price', async function(req, res) {
             }
         }
     );
-    console.log()
 
     return res.redirect('/shopping-cart');
 });
@@ -263,7 +259,7 @@ app.post('/user-login', async function(req, res){
     req.session.username = users.username;
     req.session.user_type = users.user_type;
 
-    console.log('log in successful!');
+    console.log('logged in user._id: ' + users._id);
     return res.redirect('/landing-page');
 });
 // LOG OUT
@@ -332,14 +328,26 @@ app.post('/create-user', async function(req, res){
     return res.render('login',{msg: "You may now log in"});
 });
 
-
+// ADMIN
 app.get('/admin', function(req, res){
     let user = null;
 
+    
     if(req.session.isAuth){
         user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(user.user_type == 0){
+            return res.redirect('back');
+        }
     }
-    res.render('admindash',{
+
+    // Not allowed if user null
+    if(!user){
+        return res.redirect('back');
+    }
+    
+    return res.render('admin-dash',{
         user: user
     });
 

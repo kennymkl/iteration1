@@ -107,7 +107,13 @@ main{
     color: #FFFFFF;
     font-size: 1.5rem;
     margin-left: 2rem;
-    margin-bottom: 0.75  rem;
+    margin-bottom: 1  rem;
+}
+.nav-admin{
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    margin-left: 1.75rem;
+    margin-bottom: 1  rem;
 }
 @media only screen and (max-width: 800px){
     .navbar{

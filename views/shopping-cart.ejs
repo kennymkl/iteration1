@@ -19,11 +19,15 @@
 </head>
 <body>
     <!-- NAVBAR -->
-    <% if(username){%>
-    <%- include ('partials/user-navbar') %>
-    <%} else{ %>
-    <%- include ('partials/navbar') %>
-    <%} %>  
+    <% if(user){                                    %>
+    <%      if(user.user_type == 0) {               %>
+    <%-         include ('partials/user-navbar')    %>
+    <%      } else if (user.user_type > 0){         %>
+    <%-          include ('partials/admin-navbar')  %>
+    <%      }                                       %>
+    <%} else{                                       %>
+    <%-     include ('partials/navbar')             %>
+    <%}                                             %> 
 
     <!-- MAIN CONTENT -->
     <section class="SCart">
