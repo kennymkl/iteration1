@@ -1,5 +1,7 @@
 <!-- NAVBAR -->
 <nav class="navbar">
+    <div class="nav-admin"> Admin: </div>
+
     <div class="navbar-logo">
         <div class="navbar-title">Retrospect</div>
     </div>
@@ -7,13 +9,12 @@
     <ul class="navbar-nav">
         <li class="navbar-item"><a href="/landing-page" class="navbar-link">Home</a></li>
         <li class="navbar-item"><a href="/shop" class="navbar-link">Shop</a> </li>
-        <li class="navbar-item"><a href="/blog" class="navbar-link">Blog</a> </li>
+        <!-- <li class="navbar-item"><a href="/blog" class="navbar-link">Blog</a> </li> -->
         <li class="navbar-item"><a href="/size-chart" class="navbar-link">Size Chart</a> </li>
         <li class="navbar-item"><a href="/about-us" class="navbar-link">About Us</a></li>
         <li class="navbar-item"><a href="/admin" class="navbar-link">Dashboard</a></li>
         
         <div class="nav-bot">
-            <div class="nav-admin"> Admin: </div>
             <div class="nav-user"> <%= user.username %> </div>
             <li class="nav-item" id="shopping-cart">
                 <a href="/shopping-cart" class="navbar-link">
