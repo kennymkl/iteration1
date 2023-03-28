@@ -959,17 +959,14 @@ input[type=submit]:hover{
     display: flex;
     flex-direction: row;
     flex-wrap:wrap;
-
-
 }
-
 
 
 .admin-card{
     background-color: var(--bg-secondary);
     color: var(--font-primary);
     max-width: 30rem;
-    height: fit-content;
+    height: fit-content;    
     display: grid;
     padding: 1rem;
     margin: 1rem;
@@ -1006,4 +1003,12 @@ input[type=submit]:hover{
   transform: translate(50%, 50%);
   border-radius: 1rem;
   background-color: var(--bg-secondary); /* Fallback color */
+}
+
+.current-orders{
+
+    display: grid;
+    gap: 2rem;
+
+    grid-template-columns: 1fr 1fr;
 }

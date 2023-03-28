@@ -329,26 +329,31 @@ app.post('/create-user', async function(req, res){
 });
 
 // ADMIN
-app.get('/admin', function(req, res){
-    let user = null;
+app.get('/admin', async function(req, res){
+    let curr_user = null;
 
     
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
-        if(user.user_type == 0){
+        if(curr_user.user_type == 0){
             return res.redirect('back');
         }
     }
 
     // Not allowed if user null
-    if(!user){
+    if(!curr_user){
         return res.redirect('back');
     }
+
+    const orders = await OrdersModel.find({});
+    const all_users = await UserModel.find({ username: {$nin: curr_user.username}});
     
     return res.render('admin-dash',{
-        user: user
+        curr_user: curr_user,
+        all_users, all_users,
+        orders: orders
     });
 
 });
