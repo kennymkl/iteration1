@@ -226,6 +226,17 @@ app.get('/checkout/:username/:total_price', async function(req, res) {
     return res.redirect('/shopping-cart');
 });
 
+// BLOG
+app.get('/blog', function(req, res){
+    let user = null;
+    if(req.session.isAuth){
+        user = req.session;
+    }
+    return res.render('blog', {
+        user: user
+    });
+});
+
 // SIZE CHART
 app.get('/size-chart', function(req, res){
     let user = null;
