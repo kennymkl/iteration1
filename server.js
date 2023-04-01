@@ -54,46 +54,47 @@ app.get('/', function(req, res){
     let user = null;
 
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
     }
     res.render('landing-page', {
-        user: user
+        curr_user: curr_user
     });
 });
 app.get('/landing-page', function(req, res){
-    let user = null;
+    let curr_user = null;
 
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
     }
     res.render('landing-page',{
-        user: user
+        curr_user: curr_user
     });
 
 });
 
 // ABOUT US
 app.get('/about-us', function(req, res){
-    let user = null;
+    let curr_user = null;
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
     }
     res.render('about-us',{
-        user: user
+        curr_user: curr_user
     });
 });
 
 // SHOP
 app.get('/shop', async function(req, res){
-    let user = null;
+    let curr_user = null;
+    
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
     }
 
     const items = await ItemsModel.find({});
 
     res.render('shop',{
-        user: user,
+        curr_user: curr_user,
         items: items
     });
 });
@@ -101,16 +102,16 @@ app.get('/shop', async function(req, res){
 // SHOPPING-CART
 app.get('/shopping-cart', async function(req, res){
 
-    let user = null;
+    let curr_user = null;
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
     }
 
     const cart_items = await UserCartModel.find({user_id: req.session._id});
     console.log(cart_items);
 
     res.render('shopping-cart', {
-        user: user,
+        curr_user: curr_user,
         cart_items: cart_items,
         username: req.session.username
     })
@@ -228,23 +229,23 @@ app.get('/checkout/:username/:total_price', async function(req, res) {
 
 // BLOG
 app.get('/blog', function(req, res){
-    let user = null;
+    let curr_user = null;
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
     }
     return res.render('blog', {
-        user: user
+        curr_user: curr_user
     });
 });
 
 // SIZE CHART
 app.get('/size-chart', function(req, res){
-    let user = null;
+    let curr_user = null;
     if(req.session.isAuth){
-        user = req.session;
+        curr_user = req.session;
     }
     return res.render('size-chart', {
-        user: user
+        curr_user: curr_user
     });
 });
 

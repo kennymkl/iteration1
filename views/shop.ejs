@@ -16,10 +16,10 @@
 <body>
 
     <!-- NAVBAR -->
-    <% if(user){                                    %>
-	<%      if(user.user_type == 0) {               %>
+    <% if(curr_user){                                    %>
+	<%      if(curr_user.user_type == 0) {               %>
 	<%-         include ('partials/user-navbar')    %>
-	<%      } else if (user.user_type > 0){         %>
+	<%      } else if (curr_user.user_type > 0){         %>
 	<%-          include ('partials/admin-navbar')  %>
 	<%      }                                       %>
 	<%} else{                                       %>
