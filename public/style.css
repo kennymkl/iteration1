@@ -1013,6 +1013,6 @@ input[type=submit]:hover{
     grid-template-columns: 1fr 1fr;
 }
 
-.order-btns{
+.order-btns, .user-btns{
     width: 100%;
 }
