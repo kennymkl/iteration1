@@ -100,23 +100,24 @@
                   <input type="button" name="delete-user" value="Delete User"></input>
                   <input type="button" name="reset-pass" value="Reset Password"></input>
               </div>
-              <div class="admin-card additem">
-                  <input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal-add-user"></input>
-              </div>
-              <div class="item-edit-modal" id="admin-add-modal">
-                <div class="item-edit-modal-content">
-                  <form class=admin-add-form action="add-admin" method="POST">
-                    <label for="admin-name"> Username Name<label><br>
-                    <input type="text" name="admin-name" value=""><br>
-                    <label for="admin-pass"> Admin Password<label><br>
-                    <input type="text" name="admin-password" value=""><br>
-                    <input type="submit" name="admin-add" value="Create Admin User">
-                    <button type="button" class="close">Close</button>
-                  </form>
-                </div>
-              </div>
             </div>
             <% }) %>
+
+            <div class="admin-card additem">
+              <input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal-add-user"></input>
+            </div>
+            <div class="item-edit-modal" id="admin-add-modal">
+              <div class="item-edit-modal-content">
+                <form class=admin-add-form action="add-admin" method="POST">
+                  <label for="admin-name"> Username Name<label><br>
+                  <input type="text" name="admin-name" value=""><br>
+                  <label for="admin-pass"> Admin Password<label><br>
+                  <input type="text" name="admin-password" value=""><br>
+                  <input type="submit" name="admin-add" value="Create Admin User">
+                  <button type="button" class="close">Close</button>
+                </form>
+              </div>
+            </div>
 
             <h2>Current Orders</h2>
 
