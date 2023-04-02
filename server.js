@@ -86,7 +86,7 @@ app.get('/about-us', function(req, res){
 // SHOP
 app.get('/shop', async function(req, res){
     let curr_user = null;
-    
+
     if(req.session.isAuth){
         curr_user = req.session;
     }
@@ -359,15 +359,80 @@ app.get('/admin', async function(req, res){
         return res.redirect('back');
     }
 
-    const orders = await OrdersModel.find({});
-    const all_users = await UserModel.find({ username: {$nin: curr_user.username}});
+    const orders = await OrdersModel.find({}); // Gets all orders
+    const all_users = await UserModel.find({ username: {$nin: curr_user.username}}); // Gets all users except current user
+    const all_items = await ItemsModel.find({}); // Gets all items
     
     return res.render('admin-dash',{
         curr_user: curr_user,
-        all_users, all_users,
+        all_users: all_users,
+        all_items: all_items,
         orders: orders
     });
 
+});
+// Revert Status
+app.get('/revert-status/:order_id/:status', async function(req, res) {
+
+    const status = req.params.status;
+    const order_id = req.params.order_id;
+
+    console.log("Order: #" + order_id);
+    console.log("Reverted Status: " + status);
+
+    if(status === "Payment Successfu! Preparing your Order.") {
+        await OrdersModel.updateOne({_id: order_id},{
+            $set: {status: "Waiting for Payment Confirmation"}
+        })
+    } else if(status === "Out for Delivery.") {
+        await OrdersModel.updateOne({_id: order_id},{
+            $set: {status: "Payment Successfu! Preparing your Order."}
+        })
+    } else if(status === "Order Received.") {
+        await OrdersModel.updateOne({_id: order_id},{
+            $set: {status: "Out for Delivery."}
+        })
+    }
+
+    res.redirect('/admin');
+});
+
+// Revert Status
+app.get('/advance-status/:order_id/:status', async function(req, res) {
+
+    const status = req.params.status;
+    const order_id = req.params.order_id;
+    
+    console.log("Order: #" + order_id);
+    console.log("Advanced Status: " + status);
+
+    
+
+    if(status === "Waiting for Payment Confirmation.") {
+        await OrdersModel.updateOne({_id: order_id},{
+            $set: {status: "Payment Successfu! Preparing your Order."}
+        })
+    } else if(status === "Payment Successfu! Preparing your Order.") {
+        await OrdersModel.updateOne({_id: order_id},{
+            $set: {status: "Out for Delivery."}
+        })
+    } else if(status === "Out for Delivery.") {
+        await OrdersModel.updateOne({_id: order_id},{
+            $set: {status: "Order Received."}
+        })
+    }
+
+    res.redirect('/admin');
+});
+
+// Revert Status
+app.get('/cancel-order/:order_id', async function(req, res) {
+    const order_id = req.params.order_id;
+    console.log("Cancelled Order: " + order_id);
+
+    await OrdersModel.findOneAndDelete({_id: order_id});
+    
+    res.redirect('/admin');
 });
 
 app.listen(3000, () => console.log('Server started on port 3000'));
