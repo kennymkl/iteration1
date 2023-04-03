@@ -20,6 +20,14 @@
         <!-- NAVBAR -->
         <%- include ('partials/admin-navbar')  %>
 
+
+        <% if(msg){ %>
+        <div class="success-msg" id="success-msg">
+          <%= msg %>
+          <div class="error-msg-btn" onclick="hideMSG()">x</div>
+        </div>
+        <%} %>
+
         <main class="admin-dash">
             <h1>Seller Dashboard</h1>
 
@@ -98,7 +106,7 @@
                   <h3>User Type: <%= user_type %></h3>
 
                   <a href="#"><input class="user-btns" type="button" name="delete-user" value="Delete User"></input></a>
-                  <a href="#"><input class="user-btns" name="reset-pass" value="Reset Password"></input></a>
+                  <a href="#"><input class="user-btns" type="button" name="reset-pass" value="Reset Password"></input></a>
               </div>
             </div>
 
@@ -117,7 +125,7 @@
             <% }) %>
 
             <div class="admin-card additem">
-              <input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal-add-user"></input>
+              <a href="/create-admin"><input class="user-btns" type="button" name="inv-edit" value="Create Admin" ></input></a> <!--id="myBtn-modal-add-user"-->
             </div>
 
             <div class="item-edit-modal" id="admin-add-modal">
@@ -184,4 +192,12 @@
 
     </script>
 
+    <!-- Hide Success MSG -->
+    <script>
+      function hideMSG(){
+        const msg = document.getElementById("success-msg");
+        msg.style.display = "none";
+        msg.style.backgroundColor = "rgba(0, 120, 0, 0.9)";
+      }
+    </script>
 </html>

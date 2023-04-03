@@ -22,11 +22,11 @@
 
       <!-- ERROR MSG -->
       <% if(msg){ %>
-        <div class="error-msg" id="error-msg">
+      <div class="error-msg" id="error-msg">
         <%= msg %>
         <div class="error-msg-btn" onclick="hideMSG()">x</div>
       </div>
-      <% } %>
+      <%} %>
         
 
         <div class="login-outer">
@@ -51,6 +51,7 @@
         function hideMSG(){
           const msg = document.getElementById("error-msg");
           msg.style.display = "none";
+          msg.style.backgroundColor = "rgba(160, 0, 0, 0.9)";
         }
       </script>
   </body>

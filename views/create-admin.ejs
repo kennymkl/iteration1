@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin: Add User</title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+
+    <!-- ICON -->
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <%- include ('partials/admin-navbar')  %>
+
+    <% if(msg){ %>
+    <div class="error-msg" id="error-msg">
+        <%= msg %>
+        <div class="error-msg-btn" onclick="hideMSG()">x</div>
+    </div>
+    <%} %>
+
+    <main>
+        <section class="admin-title">
+            <h1>Create Admin</h1>
+        </section>
+
+        <section>
+            <div class="admin-form">
+                <form action="add-admin" method="post">
+                    <div class="form-row">
+                        <label for="username">USERNAME</label>
+                        <input type="text" name="username" id="username" class="input-text" required="true">
+                    </div>
+                    <div class="form-row">
+                        <label for="your_email">E-MAIL</label>
+                        <input type="text" name="your_email" id="your_email" class="input-text" required="true" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" aria-required="true">
+                    </div>
+                    <div class="form-row">
+                        <label for="password">PASSWORD</label>
+                        <input type="password" name="password" id="password" class="input-text" required="true" aria-required="true">
+                    </div>
+                    <div class="form-row">
+                        <label for="confirm_password">CONFIRM PASSWORD</label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="input-text" required="true" aria-required="true">
+                    </div>
+                    <div class="form-row-last">
+                        <input type="submit" name="register" class="register" value="Register">
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section>
+            <a href="/admin"><button class="back-btn" type="button"> Back</button></a>
+        </section>
+    </main>
+
+    <script src="jquery-1.11.1.min.js.download"></script>
+	<script src="jquery.validate.min.js.download"></script>
+	<script src="additional-methods.min.js.download"></script>
+	<script>
+		// just for the demos, avoids form submit
+		jQuery.validator.setDefaults({
+		  	debug: true,
+		  	success:  function(label){
+        		label.attr('id', 'valid');
+   		 	},
+		});
+		$( "#myform" ).validate({
+		  	rules: {
+				username: {
+					required: true
+				},
+			    your_email: {
+			      	required: true,
+			      	email: true
+			    },
+			    password: "required",
+		    	confirm_password: {
+		      		equalTo: "#password"
+		    	}
+		  	},
+		  	messages: {
+		  		username: {
+		  			required: "Please enter a username"
+		  		},
+		  		your_email: {
+		  			required: "Please provide an email"
+		  		},
+		  		password: {
+	  				required: "Please provide a password"
+		  		},
+		  		confirm_password: {
+		  			required: "Please provide a password",
+		      		equalTo: "Wrong Password"
+		    	}
+		  	}
+		});
+	</script>
+    <!-- HIDE ERROR MSG -->
+    <script>
+        function hideMSG(){
+            const msg = document.getElementById("error-msg");
+            msg.style.display = "none";
+            msg.style.backgroundColor = "rgba(160, 0, 0, 0.9)";
+        }
+    </script>
+</body>
+</html>

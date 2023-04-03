@@ -343,6 +343,7 @@ app.post('/create-user', async function(req, res){
 // ADMIN
 app.get('/admin', async function(req, res){
     let curr_user = null;
+    let msg = null;
 
     
     if(req.session.isAuth){
@@ -364,6 +365,7 @@ app.get('/admin', async function(req, res){
     const all_items = await ItemsModel.find({}); // Gets all items
     
     return res.render('admin-dash',{
+        msg: msg,
         curr_user: curr_user,
         all_users: all_users,
         all_items: all_items,
@@ -396,17 +398,11 @@ app.get('/revert-status/:order_id/:status', async function(req, res) {
 
     res.redirect('/admin');
 });
-
 // Revert Status
 app.get('/advance-status/:order_id/:status', async function(req, res) {
 
     const status = req.params.status;
     const order_id = req.params.order_id;
-    
-    console.log("Order: #" + order_id);
-    console.log("Advanced Status: " + status);
-
-    
 
     if(status === "Waiting for Payment Confirmation.") {
         await OrdersModel.updateOne({_id: order_id},{
@@ -424,7 +420,6 @@ app.get('/advance-status/:order_id/:status', async function(req, res) {
 
     res.redirect('/admin');
 });
-
 // Revert Status
 app.get('/cancel-order/:order_id', async function(req, res) {
     const order_id = req.params.order_id;
@@ -433,6 +428,74 @@ app.get('/cancel-order/:order_id', async function(req, res) {
     await OrdersModel.findOneAndDelete({_id: order_id});
     
     res.redirect('/admin');
+});
+
+//ADD USER
+app.get('/create-admin', async function(req, res){
+    let curr_user = null;
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    // Not allowed if user null
+    if(!curr_user){
+        return res.redirect('back');
+    }
+    
+    return res.render('create-admin',{
+        curr_user: curr_user,
+        msg: msg
+    });
+
+});
+// Add an admin to DB
+app.post('/add-admin', async function(req, res){
+    const { username, your_email, password, confirm_password} = req.body;
+    console.log(username + " "  + your_email + " " + password + " " + confirm_password);
+
+    const takenUsername = await UserModel.findOne({ username: username});
+    // Validation if there is already an existing record with same username
+    if (takenUsername) {
+        console.log('taken username');
+        return res.render('create-admin',{msg: "Username already taken"});
+    }
+    const takenEmail = await UserModel.findOne({ email: your_email});
+    // Validation if there is already an existing record with same email
+    if (takenEmail) {
+        console.log('taken email');
+        return res.render('create-admin',{msg: "Email already taken"});
+    }
+
+    // Validation if passwords match
+    if( password !== confirm_password){
+        console.log('passwords do not match ' + password + ' - ' + confirm_password);
+        return res.render('create-admin',{msg: "Passwords do not match"});
+    }
+    const hashedPassword = createHash('sha256').update(password).digest('hex');
+
+    const newUser = await UserModel({
+        username: username,
+        user_type: 1, // user type admin
+        email: your_email,
+        password: hashedPassword
+    });
+    await newUser.save();
+
+    //create cart for the user
+    const newUserCart = await UserCartModel({
+        user_id: newUser,
+        username: username,
+        items: []
+    });
+    await newUserCart.save();
+
+    console.log('success!')
+    return res.redirect('/admin');
 });
 
 app.listen(3000, () => console.log('Server started on port 3000'));

@@ -29,7 +29,7 @@ body::-webkit-scrollbar-thumb{
 
 main{
     margin-left: 15.5rem;
-    margin-top: -2rem;
+    /* margin-top: -2rem; */
 }
 
 
@@ -1015,4 +1015,54 @@ input[type=submit]:hover{
 
 .order-btns, .user-btns{
     width: 100%;
+}
+
+.success-msg{
+    border-radius: 0.5rem;
+    position: absolute;
+    top: 0;
+
+    margin: 1rem;
+    padding: 2rem;
+    background-color: rgba(0, 120, 0, 0.9);
+
+    font-size: 1rem;
+
+    z-index: 99 !important; /* makes it go on top of everything  */
+}
+
+/* CREATE ADMIN */
+.admin-title{
+    margin: 3rem;
+}
+.admin-form{
+    margin: 3rem;
+    padding: 1.5rem;
+    
+    width: 50%;
+    height: 50%;
+
+    border: #333 solid 1px;
+    border-radius: 1rem;
+}
+.admin-form-inputs{
+    margin: 1rem;
+}
+.admin-form-inputs{
+    margin: 1rem;
+}  
+.back-btn{
+    margin-left: 3rem;
+    width: 5rem;
+    height: 2rem;
+
+    font-family: 'Montserrat';
+    color: #FFFFFF;
+    background-color: rgba(160, 0, 0, 0.9);
+
+    border: none;
+    border-radius: 0.5rem;
+}
+.back-btn:hover{
+    background-color: rgb(160, 0, 0);
 }
