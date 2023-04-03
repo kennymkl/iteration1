@@ -344,7 +344,6 @@ app.post('/create-user', async function(req, res){
 app.get('/admin', async function(req, res){
     let curr_user = null;
     let msg = null;
-
     
     if(req.session.isAuth){
         curr_user = req.session;
@@ -455,26 +454,49 @@ app.get('/create-admin', async function(req, res){
 });
 // Add an admin to DB
 app.post('/add-admin', async function(req, res){
+    let curr_user = null
     const { username, your_email, password, confirm_password} = req.body;
     console.log(username + " "  + your_email + " " + password + " " + confirm_password);
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+
+    if(!curr_user){
+        return res.redirect('back');
+    }
 
     const takenUsername = await UserModel.findOne({ username: username});
     // Validation if there is already an existing record with same username
     if (takenUsername) {
         console.log('taken username');
-        return res.render('create-admin',{msg: "Username already taken"});
+        return res.render('create-admin',{
+            curr_user: curr_user,
+            msg: "Username already taken"
+        });
     }
     const takenEmail = await UserModel.findOne({ email: your_email});
     // Validation if there is already an existing record with same email
     if (takenEmail) {
         console.log('taken email');
-        return res.render('create-admin',{msg: "Email already taken"});
+        return res.render('create-admin',{
+            curr_user: curr_user,
+            msg: "Email already taken"
+        });
     }
 
     // Validation if passwords match
     if( password !== confirm_password){
         console.log('passwords do not match ' + password + ' - ' + confirm_password);
-        return res.render('create-admin',{msg: "Passwords do not match"});
+        return res.render('create-admin',{
+            curr_user: curr_user,
+            msg: "Passwords do not match"
+        });
     }
     const hashedPassword = createHash('sha256').update(password).digest('hex');
 

@@ -22,9 +22,11 @@
 
 
         <% if(msg){ %>
-        <div class="success-msg" id="success-msg">
-          <%= msg %>
-          <div class="error-msg-btn" onclick="hideMSG()">x</div>
+        <div class="msg-wrapper">
+          <div class="success-msg" id="success-msg">
+            <%= msg %>
+            <div class="error-msg-btn" onclick="hideMSG()">x</div>
+          </div>
         </div>
         <%} %>
 

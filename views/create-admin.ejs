@@ -19,14 +19,15 @@
     <!-- NAVBAR -->
     <%- include ('partials/admin-navbar')  %>
 
-    <% if(msg){ %>
-    <div class="error-msg" id="error-msg">
-        <%= msg %>
-        <div class="error-msg-btn" onclick="hideMSG()">x</div>
-    </div>
-    <%} %>
+    <main> 
 
-    <main>
+        <% if(msg){ %>
+        <div class="error-msg CA-err-msg" id="error-msg">
+            <%= msg %>
+            <div class="error-msg-btn" onclick="hideMSG()">x</div>
+        </div>
+        <%} %>
+
         <section class="admin-title">
             <h1>Create Admin</h1>
         </section>

@@ -290,6 +290,7 @@ input[type=submit]:hover{
     border-radius: 0.5rem;
     position: absolute;
     top: 0;
+    margin: auto;
 
     margin: 1rem;
     padding: 2rem;
@@ -1065,4 +1066,7 @@ input[type=submit]:hover{
 }
 .back-btn:hover{
     background-color: rgb(160, 0, 0);
+}
+.CA-err-msg{
+    margin-left: 30rem;
 }
