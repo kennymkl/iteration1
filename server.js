@@ -519,5 +519,28 @@ app.post('/add-admin', async function(req, res){
     console.log('success!')
     return res.redirect('/admin');
 });
+// Delete User 
+app.get('/delete-user/:user_id', async function(req, res){
+    let curr_user = null
+
+    const user_id = req.params.user_id;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    await UserModel.findOneAndDelete({_id: user_id});
+    await UserCartModel.findOneAndDelete({user_id: user_id});
+    
+    return res.redirect('/admin');
+});
 
 app.listen(3000, () => console.log('Server started on port 3000'));
