@@ -107,8 +107,11 @@
                                      
                   <h3>User Type: <%= user_type %></h3>
 
-                  <a href="/edit-user/<%=user._id%>"><input class="user-btns" type="button" name="edit-user" value="Edit User Details"></input></a>
-                  <a href="/delete-user/<%=user._id%>"><input class="user-btns" type="button" name="delete-user" value="Delete User"></input></a>
+                  <form action="/edit-user" method="post">
+                    <input type="hidden" name="user_id" value="<%= user._id %>"></input>
+                    <button class="user-btns" type="submit" name="edit-user">Edit User Details</button>
+                  </form>
+                  <a href="/delete-user/<%=user._id%>"><button class="user-btns" type="button" name="delete-user">Delete User</button></a>
               </div>
             </div>
 

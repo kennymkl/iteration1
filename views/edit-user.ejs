@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin: Add User</title>
+    <title> Edit User</title>
 
     <!-- STYLE LINKS -->
-    <link rel="stylesheet" href="style.css">    
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
@@ -18,7 +18,7 @@
 <body>
     <!-- NAVBAR -->
     <%- include ('partials/admin-navbar')  %>
-
+    
     <main> 
         <% if(msg){ %>
         <div class="error-msg CA-err-msg" id="error-msg">
@@ -28,30 +28,49 @@
         <%} %>
 
         <section class="admin-title">
-            <h1>Create Admin</h1>
+            <h1>Edit User #<%= edit_user._id %></h1>
         </section>
 
+        <!-- EDIT USER DETAILS -->
         <section>
             <div class="admin-form">
-                <form action="add-admin" method="post">
+                <form action="update-user-details" method="post">
+                    <input type="hidden" name="user_id" value="<%= edit_user._id %>">
                     <div class="form-row">
                         <label for="username">USERNAME</label>
-                        <input type="text" name="username" id="username" class="input-text" required="true">
+                        <input type="text" name="username" id="username" class="input-text" required="true" value="<%= edit_user.username %>">
                     </div>
                     <div class="form-row">
                         <label for="your_email">E-MAIL</label>
-                        <input type="text" name="your_email" id="your_email" class="input-text" required="true" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" aria-required="true">
+                        <input type="text" name="email" id="email" class="input-text" required="true" pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" aria-required="true" value="<%= edit_user.email %>">
                     </div>
                     <div class="form-row">
-                        <label for="password">PASSWORD</label>
-                        <input type="password" name="password" id="password" class="input-text" required="true" aria-required="true">
+                        <label for="password">USER TYPE</label>
+                        <input type="text" name="user_type" id="user_type" class="input-text" required="true" aria-required="true" value="<%= edit_user.user_type %>">
+                        <label class="user-type-guide">Note: 0 - Regular User | 1 - Admin </label>
+                    </div>
+                    <div class="form-row-last">
+                        <input type="submit" name="register" class="register" value="Update User Details">
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- CHANGE PASSWORD OF USER -->
+        <section>
+            <div class="admin-form">
+                <form action="change-user-password" method="post">
+                    <input type="hidden" name="user_id" value="<%= edit_user._id %>">
+                    <div class="form-row">
+                        <label for="password">NEW PASSWORD</label>
+                        <input type="password" name="new_password" id="password" class="input-text" required="true" aria-required="true">
                     </div>
                     <div class="form-row">
-                        <label for="confirm_password">CONFIRM PASSWORD</label>
+                        <label for="confirm_password">CONFIRM NEW PASSWORD</label>
                         <input type="password" name="confirm_password" id="confirm_password" class="input-text" required="true" aria-required="true">
                     </div>
                     <div class="form-row-last">
-                        <input type="submit" name="register" class="register" value="Register">
+                        <input type="submit" name="register" class="register" value="Change User Password">
                     </div>
                 </form>
             </div>
@@ -61,6 +80,7 @@
             <a href="/admin"><button class="back-btn" type="button"> Back</button></a>
         </section>
     </main>
+
 
     <script src="jquery-1.11.1.min.js.download"></script>
 	<script src="jquery.validate.min.js.download"></script>

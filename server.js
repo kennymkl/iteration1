@@ -543,11 +543,11 @@ app.get('/delete-user/:user_id', async function(req, res){
     return res.redirect('/admin');
 });
 // Edit User
-app.get('/edit-user/:user_id', async function(req, res){
+app.post('/edit-user', async function(req, res){
     let curr_user = null
     let msg = null;
 
-    const user_id = req.params.user_id;
+    const user_id = req.body.user_id;
 
     if(req.session.isAuth){
         curr_user = req.session;
@@ -562,17 +562,120 @@ app.get('/edit-user/:user_id', async function(req, res){
     }
 
     // User that will be edited
-    const edit_user = await UserModel.findById(user_id);
-    console.log("ADMIN: " + curr_user.username);
-    console.log("EDIT: \n" + edit_user);
+    const edit_user = await UserModel.findOne({_id: user_id});
+    console.log(edit_user);
 
-    return res.redirect('/admin');
-
-    return res.render('edit-user-details', {
+    return res.render('edit-user',{
         msg: msg,
         curr_user: curr_user,
         edit_user: edit_user
     });
+});
+// Updates User Details in the DB
+app.post('/update-user-details', async function(req, res){
+    let curr_user = null
+    let msg = null;
+
+    const {user_id, username, email, user_type} = req.body;
+
+    // User whose details will be edited
+    const edit_user = await UserModel.findOne({_id: user_id});
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+    
+    const takenUsername = await UserModel.findOne({_id: {$nin: user_id}, username: username});
+    // Validation if there is already an existing record with same username that is not the edited user
+    if (takenUsername) {
+        return res.render('edit-user',{
+            msg: "Username already taken",
+            curr_user: curr_user,
+            edit_user: edit_user
+        });
+    }
+    const takenEmail = await UserModel.findOne({_id: {$nin: user_id}, email: email});
+    // Validation if there is already an existing record with same email that is not the edited user
+    if (takenEmail) {
+        return res.render('edit-user',{
+            msg: "Email already taken",
+            curr_user: curr_user,
+            edit_user: edit_user
+        });
+    }
+
+    // Validation if user_type exists
+    if (user_type !== '0' && user_type !== '1') {
+        return res.render('edit-user',{
+            msg: "User type " + user_type + " does not exists",
+            curr_user: curr_user,
+            edit_user: edit_user
+        });
+    }
+
+    
+    // User details will be updated if it reaches this point
+    const edited_user = await UserModel.updateOne({_id: user_id}, {
+        $set: {
+            username: username,
+            email: email,
+            user_type: user_type
+        }
+    })
+    console.log(edited_user);
+
+    return res.redirect('/admin');
+});
+// Changes User Password in DB
+app.post('/change-user-password', async function(req, res){
+    let curr_user = null
+    let msg = null;
+
+    const {user_id, new_password, confirm_password} = req.body;
+    console.log(user_id + " " + new_password + " " + confirm_password);
+
+    // User whose password will be edited
+    const edit_user = await UserModel.findOne({_id: user_id});
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    if (new_password !== confirm_password) {
+        return res.render('edit-user',{
+            msg: "Passwords do not match",
+            curr_user: curr_user,
+            edit_user: edit_user
+        });
+    }
+
+    const hashedPassword = createHash('sha256').update(new_password).digest('hex');
+    
+    // User details will be updated
+    const edited_user = await UserModel.updateOne({_id: user_id}, {
+        $set: {
+            password: hashedPassword
+        }
+    })
+    console.log(edited_user);
+
+    return res.redirect('/admin');
 });
 
 app.listen(3000, () => console.log('Server started on port 3000'));
