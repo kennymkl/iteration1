@@ -51,7 +51,7 @@ const items = require('./models/itemsDB');
 
 // LANDING PAGE
 app.get('/', function(req, res){
-    let user = null;
+    let curr_user = null;
 
     if(req.session.isAuth){
         curr_user = req.session;
@@ -541,6 +541,38 @@ app.get('/delete-user/:user_id', async function(req, res){
     await UserCartModel.findOneAndDelete({user_id: user_id});
     
     return res.redirect('/admin');
+});
+// Edit User
+app.get('/edit-user/:user_id', async function(req, res){
+    let curr_user = null
+    let msg = null;
+
+    const user_id = req.params.user_id;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    // User that will be edited
+    const edit_user = await UserModel.findById(user_id);
+    console.log("ADMIN: " + curr_user.username);
+    console.log("EDIT: \n" + edit_user);
+
+    return res.redirect('/admin');
+
+    return res.render('edit-user-details', {
+        msg: msg,
+        curr_user: curr_user,
+        edit_user: edit_user
+    });
 });
 
 app.listen(3000, () => console.log('Server started on port 3000'));
