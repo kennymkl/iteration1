@@ -360,7 +360,7 @@ app.get('/admin', async function(req, res){
     }
 
     const orders = await OrdersModel.find({}); // Gets all orders
-    const all_users = await UserModel.find({ username: {$nin: curr_user.username}}); // Gets all users except current user
+    const all_users = await UserModel.find({ username: {$nin: curr_user.username}, user_type: {$lte: curr_user.user_type}}); // Gets all users except current user
     const all_items = await ItemsModel.find({}); // Gets all items
     
     return res.render('admin-dash',{

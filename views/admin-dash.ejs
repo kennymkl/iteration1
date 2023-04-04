@@ -99,11 +99,13 @@
               <div class="admin-card">
                   <h2><%=user.username %></h2>
                   <% let user_type; %>
-                  <% if(user.user_type == 0) {      %>
-                  <%    user_type = "Regular User"  %>  
-                  <% } else {                       %>
-                  <%    user_type = "Admin"         %>
-                  <% }                              %>
+                  <% if(user.user_type == 0) {          %>
+                  <%    user_type = "Regular User";     %>  
+                  <% } else if (user.user_type == 1) {  %>
+                  <%    user_type = "Admin";            %>
+                  <% } else {                           %>
+                  <%    user_type = "Super User";       %>
+                  <% }                                  %>                
                                      
                   <h3>User Type: <%= user_type %></h3>
 
