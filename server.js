@@ -17,6 +17,20 @@ app.use(express.static('./public'));
 const retrospectDB = "mongodb+srv://retrospect:Retrosp3ct@retrospect.fboiauc.mongodb.net/retrospectDB";
 const retrospectConnection = mongoose.connect(retrospectDB);
 
+// WHERE THE FILES WILL BE STORES WHEN UPLOADED
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/images/items'); // cb(error, folder where files are stored)
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, Date.now() + "-" + file.originalname); // cb(error, new filename)
+    }
+
+})
+const upload = multer({storage: storage})
+
 // Initializing session
 const sessionStore = new mongoDBStore({
     uri: retrospectDB,
@@ -360,7 +374,7 @@ app.get('/admin', async function(req, res){
     }
 
     const orders = await OrdersModel.find({}); // Gets all orders
-    const all_users = await UserModel.find({ username: {$nin: curr_user.username}, user_type: {$lte: curr_user.user_type}}); // Gets all users except current user
+    const all_users = await UserModel.find({ username: {$nin: curr_user.username}, user_type: {$lte: curr_user.user_type}}); // Gets all lower or equal users except current user
     const all_items = await ItemsModel.find({}); // Gets all items
     
     return res.render('admin-dash',{
