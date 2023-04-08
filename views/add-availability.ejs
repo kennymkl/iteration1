@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Add Item </title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+
+    <!-- ICON -->
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <%- include ('partials/admin-navbar')  %>
+    
+    <main> 
+        <% if(msg){ %>
+        <div class="error-msg CA-err-msg" id="error-msg">
+            <%= msg %>
+            <div class="error-msg-btn" onclick="hideMSG()">x</div>
+        </div>
+        <%} %>
+
+        <section class="admin-title">
+            <h1> EDIT ITEM  AVAILABILITY #<%=edit_item._id%> </h1>
+            <h2> Item Name: <%=edit_item.item_name%> </h2>
+        </section>
+
+        <!-- EDIT ITEM AVAILABITY -->
+        <section>
+            <div class="admin-form">
+                <h3> EDIT AVAILABITY </h3>
+                <form action="/update-availability" method="post">
+                    <div class="form-row">
+                        <input type="hidden" name="item_id" value="<%=edit_item._id%>">
+                        <label for="size"> SIZE </label>
+                        <input type="text" name="size" class="input-text" required="true" value="">
+                        <label for="stock"> STOCK </label>
+                        <input type="number" name="stock" class="input-text" required="true" value="">
+                    </div>
+                    <button type="submit">Add Size & Stock</button>
+                </form>
+            </div>
+        </section>
+
+        <section>
+            <a href="/admin"><button class="back-btn" type="button"> Back </button></a>
+        </section>
+    </main>
+
+
+    <script src="jquery-1.11.1.min.js.download"></script>
+	<script src="jquery.validate.min.js.download"></script>
+	<script src="additional-methods.min.js.download"></script>
+	<script>
+		// just for the demos, avoids form submit
+		jQuery.validator.setDefaults({
+		  	debug: true,
+		  	success:  function(label){
+        		label.attr('id', 'valid');
+   		 	},
+		});
+		$( "#myform" ).validate({
+		  	rules: {
+				username: {
+					required: true
+				},
+			    your_email: {
+			      	required: true,
+			      	email: true
+			    },
+			    password: "required",
+		    	confirm_password: {
+		      		equalTo: "#password"
+		    	}
+		  	},
+		  	messages: {
+		  		username: {
+		  			required: "Please enter a username"
+		  		},
+		  		your_email: {
+		  			required: "Please provide an email"
+		  		},
+		  		password: {
+	  				required: "Please provide a password"
+		  		},
+		  		confirm_password: {
+		  			required: "Please provide a password",
+		      		equalTo: "Wrong Password"
+		    	}
+		  	}
+		});
+	</script>
+    <!-- HIDE ERROR MSG -->
+    <script>
+        function hideMSG(){
+            const msg = document.getElementById("error-msg");
+            msg.style.display = "none";
+            msg.style.backgroundColor = "rgba(160, 0, 0, 0.9)";
+        }
+    </script>
+</body>
+</html>

@@ -523,6 +523,9 @@ input[type=submit]:hover{
         margin-bottom:50px
     }
 }
+.form-row{
+    margin: 1rem;
+}
 
 /* About-Us & Shopping cart CSS*/
 
@@ -1014,7 +1017,7 @@ input[type=submit]:hover{
     grid-template-columns: 1fr 1fr;
 }
 
-.order-btns, .user-btns{
+.order-btns, .user-btns, .item-btns{
     width: 100%;
 }
 
@@ -1070,7 +1073,23 @@ input[type=submit]:hover{
 .CA-err-msg{
     margin-left: 30rem;
 } 
-.user-type-guide{
+.user-type-guide, .item-photo-guide{
     margin-left: 3rem;
     color:#777777;
+}
+
+/* EDIT ITEM */
+.item-photo-name{
+    margin-bottom: 1rem;
+}
+.delete-btn{
+    margin-left: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgb(160, 0, 0);
+    color: #FFFFFF;
+    height: 2rem;
+}
+.delete-btn:hover{
+    background-color: rgb(200, 0, 0);
 }

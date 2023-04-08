@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Add Item </title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+
+    <!-- ICON -->
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <%- include ('partials/admin-navbar')  %>
+    
+    <main> 
+        <% if(msg){ %>
+        <div class="error-msg CA-err-msg" id="error-msg">
+            <%= msg %>
+            <div class="error-msg-btn" onclick="hideMSG()">x</div>
+        </div>
+        <%} %>
+
+        <section class="admin-title">
+            <h1> ADD ITEM </h1>
+        </section>
+
+        <!-- EDIT USER DETAILS -->
+        <section>
+            <div class="admin-form">
+                <form action="/add-item" method="post" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <label for="collection"> COLLECTION </label>
+                        <input type="text" name="collection" class="input-text" required="true" value="">
+                    </div>
+                    <div class="form-row">
+                        <label for="item_name"> ITEM NAME </label>
+                        <input type="text" name="item_name" class="input-text" required="true" aria-required="true" value="">
+                    </div>
+                    <div class="form-row">
+                        <label for="description"> DESCRIPTION </label>
+                        <input type="text" name="description" class="input-text" required="true" aria-required="true" value="">
+                    </div>
+                    <div class="form-row">
+                        <label for="price"> PRICE </label>
+                        <input type="number" name="price" class="input-text" required="true" aria-required="true" value="">
+                    </div>
+                    <div class="form-row">
+                        <label for="password"> ITEM PHOTO </label>
+                        <input type="file" name="item_photo" class="input-text" required="true" aria-required="true" value="">
+                        <label class="item-photo-guide"> Note: 1 photo only </label>
+                    </div>
+                    <div class="form-row-last">
+                        <input type="submit" name="register" class="register" value="Add Item">
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section>
+            <a href="/admin"><button class="back-btn" type="button"> Back</button></a>
+        </section>
+    </main>
+
+
+    <script src="jquery-1.11.1.min.js.download"></script>
+	<script src="jquery.validate.min.js.download"></script>
+	<script src="additional-methods.min.js.download"></script>
+	<script>
+		// just for the demos, avoids form submit
+		jQuery.validator.setDefaults({
+		  	debug: true,
+		  	success:  function(label){
+        		label.attr('id', 'valid');
+   		 	},
+		});
+		$( "#myform" ).validate({
+		  	rules: {
+				username: {
+					required: true
+				},
+			    your_email: {
+			      	required: true,
+			      	email: true
+			    },
+			    password: "required",
+		    	confirm_password: {
+		      		equalTo: "#password"
+		    	}
+		  	},
+		  	messages: {
+		  		username: {
+		  			required: "Please enter a username"
+		  		},
+		  		your_email: {
+		  			required: "Please provide an email"
+		  		},
+		  		password: {
+	  				required: "Please provide a password"
+		  		},
+		  		confirm_password: {
+		  			required: "Please provide a password",
+		      		equalTo: "Wrong Password"
+		    	}
+		  	}
+		});
+	</script>
+    <!-- HIDE ERROR MSG -->
+    <script>
+        function hideMSG(){
+            const msg = document.getElementById("error-msg");
+            msg.style.display = "none";
+            msg.style.backgroundColor = "rgba(160, 0, 0, 0.9)";
+        }
+    </script>
+</body>
+</html>

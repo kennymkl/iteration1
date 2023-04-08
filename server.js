@@ -692,4 +692,294 @@ app.post('/change-user-password', async function(req, res){
     return res.redirect('/admin');
 });
 
+// ADD ITEM PAGE
+app.get('/create-item', async function(req, res) {
+
+    let curr_user = null
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    res.render('create-item', {
+        curr_user: curr_user,
+        msg: msg
+    })
+});
+// Add item to DB
+app.post('/add-item', upload.single('item_photo') ,async function(req, res){
+    
+    let curr_user = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const {collection, item_name, description, price} = req.body;
+    const item_photo = req.file.filename;
+
+    const takenItemName = await ItemsModel.findOne({item_name: item_name});
+    if(takenItemName && (takenItemName.collection_type === collection)){
+        res.render('create-item', {
+            curr_user: curr_user,
+            msg: "Item name already exists in collection \"" + takenItemName.collection_type + "\"  "
+        })
+    }
+
+    const newItem = await ItemsModel({
+        collection_type: collection,
+        item_name: item_name,
+        description: description,
+        price: price,
+        item_photo: item_photo
+    }); 
+    await newItem.save();
+
+    console.log(collection + " " + item_name + " "  + description + " "  + price + " " + item_photo);
+    return res.redirect('/admin');
+});
+
+// EDIT ITEM PAGE
+app.post('/edit-item', async function(req, res) {
+
+    let curr_user = null
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const item_id = req.body.edit_item;
+
+    const edit_item = await ItemsModel.findOne({_id: item_id});
+
+    console.log(edit_item);
+
+    res.render('edit-item', {
+        curr_user: curr_user,
+        msg: msg,
+        edit_item: edit_item
+    });
+
+});
+// Update edited item
+app.post('/update-item-details', async function(req, res) {
+    let curr_user = null
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const {item_id, collection, item_name, description, price} = req.body;
+
+    const edit_item = await ItemsModel.findOne({_id: item_id});
+
+    const takenItemName = await ItemsModel.findOne({_id: {$nin: item_id}, item_name: item_name});
+    if(takenItemName){
+        res.render('edit-item', {
+            curr_user: curr_user,
+            msg: "Item name already taken",
+            edit_item: edit_item
+        });
+    }
+
+    await ItemsModel.updateOne({_id: item_id},{
+        collection_type: collection,
+        item_name: item_name,
+        description: description,
+        price: price
+    })
+
+    res.redirect('/admin');
+});
+
+// ADD AVAILABILITY PAGE
+app.post('/add-availability', async function(req, res){
+    let curr_user = null;
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const item_id = req.body.item_id;
+    const edit_item = await ItemsModel.findOne({_id: item_id});
+
+    console.log(edit_item);
+
+    res.render('add-availability', {
+       curr_user: curr_user,
+       msg: msg,
+       edit_item: edit_item 
+    });
+});
+app.post('/add-availability', async function(req, res){
+    let curr_user = null;
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const item_id = req.body.item_id;
+    const edit_item = await ItemsModel.findOne({_id: item_id});
+
+    console.log(edit_item);
+
+    res.render('add-availability', {
+       curr_user: curr_user,
+       msg: msg,
+       edit_item: edit_item 
+    });
+});
+// Delete Availability
+app.post('/delete-availability', async function(req, res) {
+
+    let curr_user = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const {item_id, size, stock} = req.body;
+
+    console.log(item_id);
+    console.log(size);
+    console.log(stock);
+
+
+    // const takenSize = await ItemsModel.findOne({_id: item_id, availability: { $elemMatch: {size: size}}});
+
+    await ItemsModel.updateOne({_id: item_id}, {
+        $pull: {
+            availability: {
+                size: size,
+                stock: stock
+            }
+        }
+    });
+
+    res.redirect('/admin');
+});
+
+// UPDATE AVAILABILITY
+app.post('/update-availability', async function(req, res) {
+
+    let curr_user = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const {item_id, size, stock} = req.body;
+
+    const edit_item = await ItemsModel.findOne({_id: item_id});
+
+    const takenSize = await ItemsModel.findOne({_id: item_id, availability: { $elemMatch: {size: size}}});
+    if(takenSize) {
+        return res.render('add-availability', {
+            curr_user: curr_user,
+            msg: "Size already exists",
+            edit_item: edit_item 
+         });
+    }
+
+    await ItemsModel.updateOne({_id: item_id}, {
+        $push: {
+            availability: {
+                size: size,
+                stock: stock
+            }
+        }
+    });
+
+    res.redirect('/admin');
+});
+// Delete Item in DB
+app.get('/delete-item/:item_id', async function(req, res) {
+    const item_id = req.params.item_id;
+    
+    await ItemsModel.deleteOne({_id: item_id});
+
+    return res.redirect('/admin');
+});
+
+app.post('/change-photo', upload.single('item_photo'), async function(req, res) {
+    
+    const {item_id} = req.body;
+    const photo_name = req.file.filename;
+
+    console.log(item_id);
+    console.log(photo_name);
+
+    await ItemsModel.updateOne({_id: item_id}, {item_photo: photo_name});
+
+    res.redirect('/admin');
+});
+
 app.listen(3000, () => console.log('Server started on port 3000'));

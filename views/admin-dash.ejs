@@ -50,8 +50,12 @@
                       <%})                                      %>
                       <li> Total Stock: <%= total_stock %></li>
                   </ul>
-                  <input type="button" name="inv-edit" value="edit" id="myBtn"></input>
-                  <input type="button" name="inv-del" value="delete"></input>
+
+                  <form action="/edit-item" method="post">
+                    <input type="hidden" name="edit_item" value="<%=item._id%>">
+                    <button class="item-btns" type="submit"> Edit Item </button>
+                  </form>
+                  <a href="/delete-item/<%=item._id%>"><input class="item-btns" type="button" name="inv-del" value="delete"></input></a>
               </div>
               <% }); %>
 
@@ -74,7 +78,7 @@
               </div>
 
               <div class="admin-card additem">
-                  <a href="#"><input type="button" name="inv-edit" value="ADD ITEM" id="myBtn-modal"></input></a>
+                  <a href="/create-item"><input class="item-btns" type="button" name="inv-edit" value="ADD ITEM"></input></a>
               </div>
 
                 <div class="item-edit-modal" id="item-add-modal">
@@ -116,7 +120,7 @@
                     <input type="hidden" name="user_id" value="<%= user._id %>"></input>
                     <button class="user-btns" type="submit" name="edit-user">Edit User Details</button>
                   </form>
-                  <a href="/delete-user/<%=user._id%>"><button class="user-btns" type="button" name="delete-user">Delete User</button></a>
+                  <a href="/delete-user/<%=user._id%>"><button class="user-btns" type="button" name="delete-user" disabled>Delete User</button></a>
               </div>
             </div>
 

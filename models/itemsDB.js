@@ -5,7 +5,7 @@ const itemSchema = new mongoose.Schema({
     item_name: { type: String, required: true},
     description: { type: String, required: true},
     availability: [{
-        size: {type: String, required: true},
+        size: {type: String, required: true, default: ""},
         stock: {type: Number, required: true, default: 0}
     }],
     price: {type: Number, required: true},
