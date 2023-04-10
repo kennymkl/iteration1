@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us - Retrospect Apparel Co.</title>
+    
+        <!-- STYLE LINKS -->
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+        <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+        <script src="https://kit.fontawesome.com/679532c273.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+    <!-- NAVBAR -->
+        <% if(curr_user){                                    %>
+            <%      if(curr_user.user_type == 0) {               %>
+            <%-         include ('partials/user-navbar')    %>
+            <%      } else if (curr_user.user_type > 0){         %>
+            <%-          include ('partials/admin-navbar')  %>
+            <%      }                                       %>
+            <%} else{                                       %>
+            <%-     include ('partials/navbar')             %>
+            <%}                                             %>
+
+        <main class="main-profile">
+            <h1>My Profile - aaronguarnes</h1> 
+            <form action="/profile-edit" method="post">
+                <div>
+                    <h2>Username</h2>
+                    <input type="text" name="userName">aaronguarnes</div>
+                </div>
+                <div>
+                    <h2>Name</h2>
+                    <input type="text" name="fullName">Garhy Aaron P. Guarnes</div>
+                </div>
+                <div>
+                    <h2>Email</h2>
+                    <input type="email" name="emailAddress">aaronguarnes@gmail.com</input>
+                </div>
+                <div>
+                    <h2>Contact Number</h2>
+                    <input type="text" name="contactNumber">+639988686098</input>
+                </div>
+                <div>
+                    <h2>Shipping Address</h2>
+                    <input type="text" name="shippingAddress">38 Walnut St. Greenwoods Executive Village</input>
+                </div>
+                <input type="submit">
+            </form>
+        </main>
+    </body>
+</html>

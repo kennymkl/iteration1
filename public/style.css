@@ -1093,3 +1093,9 @@ input[type=submit]:hover{
 .delete-btn:hover{
     background-color: rgb(200, 0, 0);
 }
+
+/*Profile */
+
+.main-profile{
+    padding:2rem;
+}

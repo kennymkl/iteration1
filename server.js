@@ -982,4 +982,15 @@ app.post('/change-photo', upload.single('item_photo'), async function(req, res) 
     res.redirect('/admin');
 });
 
+//Profile Page
+app.get('/profile', function(req, res){
+    let curr_user = null;
+    if(req.session.isAuth){
+        curr_user = req.session;
+    }
+    return res.render('profile', {
+        curr_user: curr_user
+    });
+});
+
 app.listen(3000, () => console.log('Server started on port 3000'));
