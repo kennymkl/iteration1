@@ -1099,3 +1099,66 @@ input[type=submit]:hover{
 .main-profile{
     padding:2rem;
 }
+
+.main-tracker{
+    padding:2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.main-tracker .tracker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    max-width: 400px;
+    width: 100%;
+    margin-left:50%;
+  }
+  .main-tracker .tracker-container .steps{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+  .main-tracker .steps .circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    color: #747474;
+    font-size: 22px;
+    font-weight: 500;
+    border-radius: 50%;
+    background: #b8b8b8;
+    border: 4px solid #3b3b3b;
+    transition: all 200ms ease;
+    transition-delay: 0s;
+  }
+  .main-tracker .steps .circle.active {
+    transition-delay: 100ms;
+    border-color: var(--font-primary);
+    color: var(--bg-secondary);
+  }
+  .main-tracker .steps .progress-bar {
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: #313131;
+    z-index: -1;
+  }
+  .main-tracker .progress-bar .indicator {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background: var(--font-primary);
+    transition: all 300ms ease;
+  }
+  .main-tracker .container .buttons {
+    display: flex;
+    gap: 20px;
+  }

@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us - Retrospect Apparel Co.</title>
+    
+        <!-- STYLE LINKS -->
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+        <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+        <script src="https://kit.fontawesome.com/679532c273.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+    <!-- NAVBAR -->
+        <% if(curr_user){                                    %>
+            <%      if(curr_user.user_type == 0) {               %>
+            <%-         include ('partials/user-navbar')    %>
+            <%      } else if (curr_user.user_type > 0){         %>
+            <%-          include ('partials/admin-navbar')  %>
+            <%      }                                       %>
+            <%} else{                                       %>
+            <%-     include ('partials/navbar')             %>
+            <%}                                             %>
+
+        <main class="main-tracker">
+            <div>
+                <h1>Order #</h1>
+                <ul>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                </ul>
+                100php
+            </div>
+            <div class="tracker-container">
+                <div class="steps">
+                  <span class="circle active">1</span>
+                  <span class="circle">2</span>
+                  <span class="circle">3</span>
+                  <span class="circle">4</span>
+                  <div class="progress-bar">
+                    <span class="indicator"></span>
+                  </div>
+                </div>
+              </div>
+        </main>
+
+    </body>
+
+    <script>
+
+  const circles = document.querySelectorAll(".circle"),
+  progressBar = document.querySelector(".indicator"),
+  buttons = document.querySelectorAll("button");
+
+let currentStep = 2; //Map this to status of order to update progress bar
+
+
+const updateSteps = (e) => {
+
+
+  circles.forEach((circle, index) => {
+    circle.classList[`${index < currentStep ? "add" : "remove"}`]("active");
+  });
+
+  progressBar.style.width = `${((currentStep - 1) / (circles.length - 1)) * 100}%`;
+
+};
+
+window.addEventListener("load", updateSteps);
+
+
+    </script>
+</html>
