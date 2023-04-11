@@ -406,13 +406,13 @@ app.get('/revert-status/:order_id/:status', async function(req, res) {
     console.log("Order: #" + order_id);
     console.log("Reverted Status: " + status);
 
-    if(status === "Payment Successfu! Preparing your Order.") {
+    if(status === "Payment Successful! Preparing your Order.") {
         await OrdersModel.updateOne({_id: order_id},{
             $set: {status: "Waiting for Payment Confirmation"}
         })
     } else if(status === "Out for Delivery.") {
         await OrdersModel.updateOne({_id: order_id},{
-            $set: {status: "Payment Successfu! Preparing your Order."}
+            $set: {status: "Payment Successful! Preparing your Order."}
         })
     } else if(status === "Order Received.") {
         await OrdersModel.updateOne({_id: order_id},{
@@ -430,9 +430,9 @@ app.get('/advance-status/:order_id/:status', async function(req, res) {
 
     if(status === "Waiting for Payment Confirmation.") {
         await OrdersModel.updateOne({_id: order_id},{
-            $set: {status: "Payment Successfu! Preparing your Order."}
+            $set: {status: "Payment Successful! Preparing your Order."}
         })
-    } else if(status === "Payment Successfu! Preparing your Order.") {
+    } else if(status === "Payment Successful! Preparing your Order.") {
         await OrdersModel.updateOne({_id: order_id},{
             $set: {status: "Out for Delivery."}
         })
