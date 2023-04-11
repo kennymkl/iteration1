@@ -290,10 +290,13 @@ input[type=submit]:hover{
 }
 
 .error-msg{
+    width: 40rem;
+
     border-radius: 0.5rem;
     position: absolute;
     top: 0;
     margin: auto;
+    text-align: center;
 
     margin: 1rem;
     padding: 2rem;
@@ -560,6 +563,22 @@ input[type=submit]:hover{
 }
 
 
+.checkout-btn{
+    font-size: large;
+    font-family: 'Montserrat';
+
+    color: #FFFFFF;
+    background-color: #397ca7;
+    border: none;
+    border-radius: 0.5rem;
+
+    width: 100%;
+    height: 3rem
+}
+.checkout-btn:hover{
+    transition: 3000 ease;
+    background-color: #3596d2;
+}
 .SCart{
     margin-left: 8rem;
 }
