@@ -129,6 +129,9 @@ main{
         display: none;
     }
 }
+a{
+    text-decoration: none;
+}
 @media only screen and (min-width: 800px){
     .navbar{
         top: 0;

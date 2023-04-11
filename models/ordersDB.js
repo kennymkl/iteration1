@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({ 
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'users'}, // Connected to a user by reference
     username: {type: String, required: true},
+    address: {type: String, required: true, default: ""},
     status: {type: String, required: true, default: "Waiting for Payment Confirmation."}, // EX. Has Not Been Paid, Payment Confirmed, Items Packed, Ready for Shipping 
     items: [{
         item_photo:{type: String, required:true},

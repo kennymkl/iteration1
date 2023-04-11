@@ -5,8 +5,8 @@ const userSchema = new mongoose.Schema({
     user_type: {type: Number, required: true, default: 0}, // 0 - default user | 1 - admin | 2 - super user 
     email: {type: String, lowercase: true, unique: true},
     password: { type: String, required: true, min: 3 },
-    // contact_no: {type: String, required: true},
-    // address: {type: String, required: true}
+    contact_no: {type: String, required: true, default: ""},
+    address: {type: String, required: true, default: ""}
 }); 
 
 const users = mongoose.model('users', userSchema);

@@ -215,6 +215,7 @@ app.get('/checkout/:username/:total_price', async function(req, res) {
     const total_price = req.params.total_price;
 
     const user_cart = await UserCartModel.findOne({username: username});
+    const user = await UserCartModel.findOne({username: username});
 
     // If there are no items in the cart then create a new order
     if(user_cart.items.length == 0){
@@ -225,6 +226,7 @@ app.get('/checkout/:username/:total_price', async function(req, res) {
     const newOrder = await OrdersModel({
         user_id: req.session._id,
         username: req.session.username,
+        address: user.address,
         items: user_cart.items,
         total_price: total_price
     });
@@ -982,15 +984,83 @@ app.post('/change-photo', upload.single('item_photo'), async function(req, res) 
     res.redirect('/admin');
 });
 
-//Profile Page
-app.get('/profile', function(req, res){
+//PROFILE PAGE
+app.get('/profile', async function(req, res){
     let curr_user = null;
     if(req.session.isAuth){
         curr_user = req.session;
     }
+
+    const user = await UserModel.findOne({_id: req.session._id})
+    console.log(user);
+
     return res.render('profile', {
-        curr_user: curr_user
+        curr_user: curr_user,
+        user: user
     });
+});
+// EDIT PROFILE PAGAE
+app.get('/edit-profile', async function(req, res){
+    let curr_user = null;
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+    }
+    const user = await UserModel.findOne({_id: req.session._id})
+    console.log(user);
+
+    return res.render('edit-profile', {
+        curr_user: curr_user,
+        user: user,
+        msg: msg
+    });
+});
+// Update Profile
+app.post('/update-profile', async function(req, res){
+    let curr_user = null;
+    if(req.session.isAuth){
+        curr_user = req.session;
+    }
+
+    const user = await UserModel.findOne({_id: req.session._id})
+
+    const {user_id, userName, emailAddress, contactNumber, shippingAddress} = req.body;
+
+    console.log(userName);
+    console.log(emailAddress);
+    console.log(contactNumber);
+    console.log(shippingAddress);
+
+    const takenUsername = await UserModel.findOne({_id: {$nin: user_id}, username: userName});
+    // Validation if there is already an existing record with same username that is not the edited user
+    if (takenUsername) {
+        return res.render('edit-profile',{
+            msg: "Username already taken",
+            curr_user: curr_user,
+            user: user
+        });
+    }
+    const takenEmail = await UserModel.findOne({_id: {$nin: user_id}, email: emailAddress});
+    // Validation if there is already an existing record with same email that is not the edited user
+    if (takenEmail) {
+        return res.render('edit-profile',{
+            msg: "Email already taken",
+            curr_user: curr_user,
+            user: user
+        });
+    }
+
+    await UserModel.updateOne({_id: user_id}, {
+        $set: {
+            username: userName,
+            email: emailAddress,
+            contact_no: contactNumber,
+            address: shippingAddress
+        }
+    })
+
+    res.redirect('/profile')
 });
 
 app.get('/tracker', function(req, res){
