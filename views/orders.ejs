@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Retrospect Apparel Co.</title>
+
+    <!-- STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat%3Ai%2Cbi%2C700%2C400display=swap" rel="stylesheet" nonce="">
+    <link href="https://cdjns.cloudfare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/679532c273.js" crossorigin="anonymous"></script>
+    
+    <!-- ICON -->
+    <link rel="icon" href="images/retrospect-icon.png" type="image/png">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <% if(curr_user){                                    %>
+    <%      if(curr_user.user_type == 0) {               %>
+    <%-         include ('partials/user-navbar')    %>
+    <%      } else if (curr_user.user_type > 0){         %>
+    <%-          include ('partials/admin-navbar')  %>
+    <%      }                                       %>
+    <%} else{                                       %>
+    <%-     include ('partials/navbar')             %>
+    <%}                                             %> 
+
+    <!-- MAIN CONTENT -->
+
+    <main class="order-main">
+        <h1 class="order-header"> Orders </h1>
+
+        <% user_orders.forEach((order) => {%>
+        <div class="order-box">
+            <div class="order-number">
+                <h2>Order #<%= order._id %></h2>
+            </div>
+            <div class="order-contact-no">
+                <h3> Contact Number: </h3>
+                <p> <%= order.contact_no %> </p>
+            </div>
+            <div class="order-address">
+                <h3> Address: </h3>
+                <p> <%= order.address %> </p>
+            </div>
+            <div class="order-item-list">
+                <table class="item-table">
+                    <thead>
+                        <th class="item-header">Item</th>
+                        <th class="item-header">Price</th>
+                        <th class="item-header">Size</th>
+                        <th class="item-header">Quantity</th>
+                    </thead>
+                    <% order.items.forEach((item) => {%>
+                    <tr>
+                        <td class="item-data"> <%= item.item_name %> </td>
+                        <td class="item-data"> <%= item.price %> </td>
+                        <td class="item-data"> <%= item.size %> </td>
+                        <td class="item-data"> <%= item.quantity %> </td>
+                    </tr>
+                    <% }) %>
+                    <tfoot class="order-total">
+                        <td> Total: </td>
+                        <td> <%= order.total_price %> </td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <% });%>
+    </main>
+    
+    
+    <main>
+        <!-- FOOTER -->
+        <%- include('partials/footer-links') %>   
+    </main>
+        
+</body>
+</html>

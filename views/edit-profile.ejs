@@ -16,41 +16,58 @@
 
     <body>
     <!-- NAVBAR -->
-        <% if(curr_user){                                    %>
-            <%      if(curr_user.user_type == 0) {               %>
-            <%-         include ('partials/user-navbar')    %>
-            <%      } else if (curr_user.user_type > 0){         %>
-            <%-          include ('partials/admin-navbar')  %>
-            <%      }                                       %>
-            <%} else{                                       %>
-            <%-     include ('partials/navbar')             %>
-            <%}                                             %>
+        <% if(curr_user){                                   %>
+        <%      if(curr_user.user_type == 0) {              %>
+        <%-         include ('partials/user-navbar')        %>
+        <%      } else if (curr_user.user_type > 0){        %>
+        <%-          include ('partials/admin-navbar')      %>
+        <%      }                                           %>
+        <%} else{                                           %>
+        <%-     include ('partials/navbar')                 %>
+        <%}                                                 %>
 
         <main class="main-profile">
-            <h1>My Profile - aaronguarnes</h1> 
-            <form action="/profile-edit" method="post">
+            <!-- ERROR MSG -->
+            <% if(msg){ %>
+                <div class="error-msg" id="error-msg">
+                    <%= msg %>
+                    <div class="error-msg-btn" onclick="hideMSG()">x</div>
+                </div>
+            <% } %>
+
+            <h1>My Profile - <%= user.username %></h1> 
+            <form action="/update-profile" method="post">
+                <input type="hidden" name="user_id" value="<%= user._id %>" >
                 <div>
                     <h2>Username</h2>
-                    <input type="text" name="userName">aaronguarnes</div>
+                    <input type="text" name="userName" value="<%= user.username %>">
                 </div>
-                <div>
+                <!-- <div>
                     <h2>Name</h2>
-                    <input type="text" name="fullName">Garhy Aaron P. Guarnes</div>
-                </div>
+                    <input type="text" name="fullName" value="<%= //user.username %>">Garhy Aaron P. Guarnes
+                </div> -->
                 <div>
                     <h2>Email</h2>
-                    <input type="email" name="emailAddress">aaronguarnes@gmail.com</input>
+                    <input type="text" name="emailAddress"  pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" value="<%= user.email %>">
                 </div>
                 <div>
                     <h2>Contact Number</h2>
-                    <input type="text" name="contactNumber">+639988686098</input>
+                    <input type="text" name="contactNumber" value="<%= user.contact_no %>">
                 </div>
                 <div>
                     <h2>Shipping Address</h2>
-                    <input type="text" name="shippingAddress">38 Walnut St. Greenwoods Executive Village</input>
+                    <input type="text" name="shippingAddress" value="<%= user.address %>">
                 </div>
                 <input type="submit">
             </form>
         </main>
+
+    <!-- Hides the error message -->
+	<script> 
+        function hideMSG(){
+          const msg = document.getElementById("error-msg");
+          msg.style.display = "none";
+        }
+    </script> 
     </body>
 </html>

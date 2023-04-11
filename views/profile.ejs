@@ -16,35 +16,37 @@
 
     <body>
     <!-- NAVBAR -->
-        <% if(curr_user){                                    %>
-            <%      if(curr_user.user_type == 0) {               %>
-            <%-         include ('partials/user-navbar')    %>
-            <%      } else if (curr_user.user_type > 0){         %>
-            <%-          include ('partials/admin-navbar')  %>
-            <%      }                                       %>
-            <%} else{                                       %>
-            <%-     include ('partials/navbar')             %>
-            <%}                                             %>
+        <% if(curr_user){                                   %>
+        <%      if(curr_user.user_type == 0) {              %>
+        <%-         include ('partials/user-navbar')        %>
+        <%      } else if (curr_user.user_type > 0){        %>
+        <%-          include ('partials/admin-navbar')      %>
+        <%      }                                           %>
+        <%} else{                                           %>
+        <%-     include ('partials/navbar')                 %>
+        <%}                                                 %>
 
         <main class="main-profile">
-            <h1>My Profile - aaronguarnes</h1>
-            <div>
+            <h1>My Profile - <%= user.username %></h1>
+            <!-- <div>
                 <h2>Name</h2>
                 <div>Garhy Aaron P. Guarnes</div>
-            </div>
+            </div> -->
             <div>
                 <h2>Email</h2>
-                <div>aaronguarnes@gmail.com</div>
+                <div><%= user.email %></div>
             </div>
             <div>
                 <h2>Contact Number</h2>
-                <div>+639988686098</div>
+                <div><%= user.contact_no %></div>
             </div>
             <div>
                 <h2>Shipping Address</h2>
-                <div>38 Walnut St. Greenwoods Executive Village</div>
+                <div> <%= user.address %> </div>
             </div>
-            <input type="button" value="Edit" class="btn"></input>
+            <a href="/edit-profile">
+                <input type="button" value="Edit Profile" class="btn edit-btn"></input>
+            </a>
         </main>
     </body>
 </html>
