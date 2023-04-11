@@ -30,40 +30,48 @@
     <%}                                             %> 
 
     <!-- MAIN CONTENT -->
-    <section class="SCart">
-        <div class="main_SCart">
-            <h1>Your Orders</h1>
-            <div class="project">
-                <div class="shop">
-                    <% let total_price = 0;%>
-                    <% cart_items.forEach((cart_item) => { %>
-                    <%      cart_item.items.forEach((item) => {%>
-                                <!-- Items -->
-                                <div class="box">
-                                    <h2>Order #</h2>
-                                    
-                                    <div class="content">
-                                        <h3><%= item.item_name %></h3> <!-- NAME OF PRODUCT-->
-                                        <h4>Price: <%= item.price %></h4> <!-- PRICE OF PRODUCT-->
-                                        <p class="unit">Size: <%= item.size %></p>
-                                        <p class="unit">Quantity: <%= item.quantity %> </p> <!-- HOW MANY THE USER WANTS TO BUY -->
-                                        
-                                        <p class="btn-area">
-                                            <i class="fa fa-trash"></i>
-                                            <a href="/delete-item/<%=cart_item.username%>/<%= item.item_name%>/<%= item.size%>" class="btn2">Remove</a> <!-- REMOVE PRODUCT -->
-                                        </p>
-                                    </div>
-                                </div>
-                    <%          total_price += (item.quantity * item.price);%>
-                                <div class="right-bar">
-                                    <p><span>Subtotal</span> <span>PHP <%= total_price %></span></p>
-                                </div>
-                    <%      }); %>
-                    <% }); %>
-                </div>
+
+    <main class="order-main">
+        <h1 class="order-header"> Orders </h1>
+
+        <% user_orders.forEach((order) => {%>
+        <div class="order-box">
+            <div class="order-number">
+                <h2>Order #<%= order._id %></h2>
+            </div>
+            <div class="order-contact-no">
+                <h3> Contact Number: </h3>
+                <p> <%= order.contact_no %> </p>
+            </div>
+            <div class="order-address">
+                <h3> Address: </h3>
+                <p> <%= order.address %> </p>
+            </div>
+            <div class="order-item-list">
+                <table class="item-table">
+                    <thead>
+                        <th class="item-header">Item</th>
+                        <th class="item-header">Price</th>
+                        <th class="item-header">Size</th>
+                        <th class="item-header">Quantity</th>
+                    </thead>
+                    <% order.items.forEach((item) => {%>
+                    <tr>
+                        <td class="item-data"> <%= item.item_name %> </td>
+                        <td class="item-data"> <%= item.price %> </td>
+                        <td class="item-data"> <%= item.size %> </td>
+                        <td class="item-data"> <%= item.quantity %> </td>
+                    </tr>
+                    <% }) %>
+                    <tfoot class="order-total">
+                        <td> Total: </td>
+                        <td> <%= order.total_price %> </td>
+                    </tfoot>
+                </table>
             </div>
         </div>
-    </section>
+        <% });%>
+    </main>
     
     
     <main>

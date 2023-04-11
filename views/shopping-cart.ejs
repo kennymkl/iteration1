@@ -31,6 +31,15 @@
 
     <!-- MAIN CONTENT -->
     <section class="SCart">
+        <!-- ERROR MSG -->
+		<% if(msg){ %>
+			<div class="error-msg" id="error-msg">
+				<%= msg %>
+				<div class="error-msg-btn" onclick="hideMSG()">x</div>
+			</div>
+		<% } %>
+
+
         <div class="main_SCart">
             <h1>Shopping Cart</h1>
                 <div class="project">
@@ -72,6 +81,14 @@
         <!-- FOOTER -->
         <%- include('partials/footer-links') %>   
     </main>
-        
+
+
+    <!-- Hides the error message -->
+	<script> 
+        function hideMSG(){
+          const msg = document.getElementById("error-msg");
+          msg.style.display = "none";
+        }
+    </script> 
 </body>
 </html>

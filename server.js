@@ -62,6 +62,7 @@ const ItemsModel = require('./models/itemsDB');
 const OrdersModel = require('./models/ordersDB');
 const { findOneAndDelete } = require('./models/user_cartDB');
 const items = require('./models/itemsDB');
+const { AsyncResource } = require('async_hooks');
 
 // LANDING PAGE
 app.get('/', function(req, res){
@@ -127,6 +128,7 @@ app.get('/shopping-cart', async function(req, res){
     res.render('shopping-cart', {
         curr_user: curr_user,
         cart_items: cart_items,
+        msg: null,
         username: req.session.username
     })
 });
@@ -215,18 +217,25 @@ app.get('/checkout/:username/:total_price', async function(req, res) {
     const total_price = req.params.total_price;
 
     const user_cart = await UserCartModel.findOne({username: username});
-    const user = await UserCartModel.findOne({username: username});
+    const user = await UserModel.findOne({username: username});
 
     // If there are no items in the cart then create a new order
     if(user_cart.items.length == 0){
+        console.log('add items to cart first');
         return res.redirect('/shopping-cart');
     }
 
+    // If there is no address or contact number cannot checkout
+    if(user.address.length == 0 || user.contact_no.length == 0){
+        console.log('add address and/or contact no');
+        return res.redirect('/shopping-cart');
+    }
 
     const newOrder = await OrdersModel({
         user_id: req.session._id,
         username: req.session.username,
         address: user.address,
+        contact_no: user.contact_no,
         items: user_cart.items,
         total_price: total_price
     });
@@ -1073,6 +1082,21 @@ app.get('/tracker', function(req, res){
     });
 });
 
+// ORDERS PAGE
+app.get('/orders', async function(req, res) {
+    let curr_user = null;
+    if(req.session.isAuth){
+        curr_user = req.session;
+    }
+    
+    const user_orders = await OrdersModel.find({user_id: curr_user._id});
+    console.log(user_orders);
+
+    res.render('orders', {
+        curr_user: curr_user,
+        user_orders: user_orders
+    })
+});
 
 
 app.listen(3000, () => console.log('Server started on port 3000'));
