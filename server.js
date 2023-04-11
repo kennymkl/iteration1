@@ -388,7 +388,7 @@ app.get('/admin', async function(req, res){
     }
 
     const orders = await OrdersModel.find({}); // Gets all orders
-    const all_users = await UserModel.find({ _id: req.session._id, user_type: {$lte: curr_user.user_type}}); // Gets all lower or equal users except current user
+    const all_users = await UserModel.find({ _id: {$nin: curr_user._id}, user_type: {$lte: curr_user.user_type}}); // Gets all lower or equal users except current user
     const all_items = await ItemsModel.find({}); // Gets all items
     
     return res.render('admin-dash',{
@@ -411,7 +411,7 @@ app.get('/revert-status/:order_id/:status', async function(req, res) {
 
     if(status === "Payment Successful! Preparing your Order.") {
         await OrdersModel.updateOne({_id: order_id},{
-            $set: {status: "Waiting for Payment Confirmation"}
+            $set: {status: "Waiting for Payment Confirmation."}
         })
     } else if(status === "Out for Delivery.") {
         await OrdersModel.updateOne({_id: order_id},{
