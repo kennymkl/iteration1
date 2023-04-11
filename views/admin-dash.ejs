@@ -163,7 +163,13 @@
                   <h2><%= order.username %></h2>
                   <h3>Order #<%= order._id %></h3>
                   <h3>Status: <%= order.status %></h3>
-                  <h4>Number of Items: <%= order.items.length %> </h4>
+                  <% 
+                  let num_items = 0;
+                  order.items.forEach((item) => {
+                    num_items += item.quantity;
+                  })
+                  %>
+                  <h4>Number of Items: <%= num_items %> </h4>
                   <a href="/revert-status/<%= order._id %>/<%= order.status %>"><input class="order-btns" type="button" name="revert-status" value="Revert Status"></input></a>
                   <a href="/advance-status/<%= order._id %>/<%= order.status %>"><input class="order-btns" type="button" name="advance-status" value="Advance Status"></input></a>
                   <a href="/cancel-order/<%= order._id %>"><input class="order-btns" type="button" name="order-cancel" value="Cancel Order"></input></a>

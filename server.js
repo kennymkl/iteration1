@@ -63,23 +63,24 @@ const OrdersModel = require('./models/ordersDB');
 const { findOneAndDelete } = require('./models/user_cartDB');
 const items = require('./models/itemsDB');
 const { AsyncResource } = require('async_hooks');
+const usercart = require('./models/user_cartDB');
 
 // LANDING PAGE
-app.get('/', function(req, res){
+app.get('/', async function(req, res){
     let curr_user = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     res.render('landing-page', {
         curr_user: curr_user
     });
 });
-app.get('/landing-page', function(req, res){
+app.get('/landing-page', async function(req, res){
     let curr_user = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     res.render('landing-page',{
         curr_user: curr_user
@@ -88,10 +89,10 @@ app.get('/landing-page', function(req, res){
 });
 
 // ABOUT US
-app.get('/about-us', function(req, res){
+app.get('/about-us', async function(req, res){
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     res.render('about-us',{
         curr_user: curr_user
@@ -103,7 +104,7 @@ app.get('/shop', async function(req, res){
     let curr_user = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
 
     const items = await ItemsModel.find({});
@@ -119,17 +120,16 @@ app.get('/shopping-cart', async function(req, res){
 
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
 
     const cart_items = await UserCartModel.find({user_id: req.session._id});
-    console.log(cart_items);
+    // console.log(cart_items);
 
-    res.render('shopping-cart', {
+    return res.render('shopping-cart', {
         curr_user: curr_user,
         cart_items: cart_items,
         msg: null,
-        username: req.session.username
     })
 });
 // DELETE ITEM IN SHOPPING CART
@@ -157,7 +157,7 @@ app.post('/add-to-cart', async function(req, res){
     if(req.session.isAuth == undefined){
         console.log("Need Account Before adding to cart");
         return res.render('login', {
-            msg: "Need Account Before adding to cart. We apologize for the Inconvenience."
+            msg: "An account is needed before adding to cart."
         });
     }
 
@@ -165,13 +165,6 @@ app.post('/add-to-cart', async function(req, res){
 
     const {item_name, item_photo ,price, size, quantity} = req.body;
     const total_price = quantity * price;
-
-    console.log("Item Name: " + item_name);
-    console.log("Item Photo: " + item_photo)
-    console.log("Price: " + price);
-    console.log("Size: " + size);
-    console.log("Qty: " + quantity);
-    console.log("Total Price: " + total_price);
 
     const item =  {item_name, item_photo, price, size, quantity, total_price}
 
@@ -211,52 +204,62 @@ app.post('/add-to-cart', async function(req, res){
 });
 
 // ORDER CHECKOUT
-app.get('/checkout/:username/:total_price', async function(req, res) {
+app.post('/checkout', async function(req, res) {
 
-    const username = req.params.username;
-    const total_price = req.params.total_price;
+    let curr_user = null;
+    if(req.session.isAuth){
+        curr_user = await UserModel.findOne({ _id: req.session._id});
+    } else {
 
-    const user_cart = await UserCartModel.findOne({username: username});
-    const user = await UserModel.findOne({username: username});
-
-    // If there are no items in the cart then create a new order
-    if(user_cart.items.length == 0){
-        console.log('add items to cart first');
-        return res.redirect('/shopping-cart');
     }
 
-    // If there is no address or contact number cannot checkout
-    if(user.address.length == 0 || user.contact_no.length == 0){
-        console.log('add address and/or contact no');
-        return res.redirect('/shopping-cart');
+    const {user_id, total_price} = req.body;
+
+    const user_cart = await UserCartModel.findOne({user_id: user_id});
+    
+    //if there are no items in cart
+    if(user_cart.items == 0){
+        const cart_items = await UserCartModel.find({user_id: req.session._id});
+        return res.render('shopping-cart', {
+            curr_user: curr_user,
+            cart_items: cart_items,
+            msg: "Add items to cart first.",
+        })
+    }
+    
+    if(curr_user.address.length === 0 || curr_user.contact_no.length === 0){
+        const cart_items = await UserCartModel.find({user_id: req.session._id});
+        return res.render('shopping-cart', {
+            curr_user: curr_user,
+            cart_items: cart_items,
+            msg: "Make sure to put address and/or contact number in your profile before checking out. \n You can access your profile by clicking your username in the navigation bar",
+        })
     }
 
     const newOrder = await OrdersModel({
-        user_id: req.session._id,
-        username: req.session.username,
-        address: user.address,
-        contact_no: user.contact_no,
+        user_id: curr_user._id,
+        username: curr_user.username,
+        address: curr_user.address,
+        contact_no: curr_user.contact_no,
         items: user_cart.items,
         total_price: total_price
     });
     await newOrder.save();
 
-    const deleteditems = await UserCartModel.updateOne(
-        {user_id: req.session._id},
-        {$pullAll: {
+    await UserCartModel.updateOne({user_id: curr_user._id,},{
+        $pullAll: {
             items: user_cart.items
-            }
         }
-    );
+    })
 
     return res.redirect('/shopping-cart');
 });
 
 // BLOG
-app.get('/blog', function(req, res){
+app.get('/blog', async function(req, res){
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     return res.render('blog', {
         curr_user: curr_user
@@ -264,10 +267,10 @@ app.get('/blog', function(req, res){
 });
 
 // SIZE CHART
-app.get('/size-chart', function(req, res){
+app.get('/size-chart', async function(req, res){
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     return res.render('size-chart', {
         curr_user: curr_user
@@ -275,7 +278,7 @@ app.get('/size-chart', function(req, res){
 });
 
 // LOGIN
-app.get('/login', function(req, res){
+app.get('/login', async function(req, res){
     const msg = null;
     return res.render('login', {msg: msg}); // Will store error message if needed
 });
@@ -371,7 +374,7 @@ app.get('/admin', async function(req, res){
     let msg = null;
     
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -385,7 +388,7 @@ app.get('/admin', async function(req, res){
     }
 
     const orders = await OrdersModel.find({}); // Gets all orders
-    const all_users = await UserModel.find({ username: {$nin: curr_user.username}, user_type: {$lte: curr_user.user_type}}); // Gets all lower or equal users except current user
+    const all_users = await UserModel.find({ _id: req.session._id, user_type: {$lte: curr_user.user_type}}); // Gets all lower or equal users except current user
     const all_items = await ItemsModel.find({}); // Gets all items
     
     return res.render('admin-dash',{
@@ -460,7 +463,7 @@ app.get('/create-admin', async function(req, res){
     let msg = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
             return res.redirect('back');
@@ -484,7 +487,7 @@ app.post('/add-admin', async function(req, res){
     console.log(username + " "  + your_email + " " + password + " " + confirm_password);
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -551,7 +554,7 @@ app.get('/delete-user/:user_id', async function(req, res){
     const user_id = req.params.user_id;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -575,7 +578,7 @@ app.post('/edit-user', async function(req, res){
     const user_id = req.body.user_id;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -607,7 +610,7 @@ app.post('/update-user-details', async function(req, res){
     const edit_user = await UserModel.findOne({_id: user_id});
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -657,6 +660,10 @@ app.post('/update-user-details', async function(req, res){
     })
     console.log(edited_user);
 
+    res.session = edited_user;
+    console.log(req.session);
+    
+
     return res.redirect('/admin');
 });
 // Changes User Password in DB
@@ -671,7 +678,7 @@ app.post('/change-user-password', async function(req, res){
     const edit_user = await UserModel.findOne({_id: user_id});
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -710,7 +717,7 @@ app.get('/create-item', async function(req, res) {
     let msg = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id})
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -732,7 +739,7 @@ app.post('/add-item', upload.single('item_photo') ,async function(req, res){
     let curr_user = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -774,7 +781,7 @@ app.post('/edit-item', async function(req, res) {
     let msg = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -803,7 +810,7 @@ app.post('/update-item-details', async function(req, res) {
     let curr_user = null
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -843,7 +850,7 @@ app.post('/add-availability', async function(req, res){
     let msg = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -870,7 +877,7 @@ app.post('/add-availability', async function(req, res){
     let msg = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -898,7 +905,7 @@ app.post('/delete-availability', async function(req, res) {
     let curr_user = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -936,7 +943,7 @@ app.post('/update-availability', async function(req, res) {
     let curr_user = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
 
         // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
         if(curr_user.user_type == 0){
@@ -997,7 +1004,7 @@ app.post('/change-photo', upload.single('item_photo'), async function(req, res) 
 app.get('/profile', async function(req, res){
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
 
     const user = await UserModel.findOne({_id: req.session._id})
@@ -1014,7 +1021,7 @@ app.get('/edit-profile', async function(req, res){
     let msg = null;
 
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     const user = await UserModel.findOne({_id: req.session._id})
     console.log(user);
@@ -1029,7 +1036,7 @@ app.get('/edit-profile', async function(req, res){
 app.post('/update-profile', async function(req, res){
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
 
     const user = await UserModel.findOne({_id: req.session._id})
@@ -1060,7 +1067,7 @@ app.post('/update-profile', async function(req, res){
         });
     }
 
-    await UserModel.updateOne({_id: user_id}, {
+    const updated_user = await UserModel.updateOne({_id: user_id}, {
         $set: {
             username: userName,
             email: emailAddress,
@@ -1068,14 +1075,26 @@ app.post('/update-profile', async function(req, res){
             address: shippingAddress
         }
     })
+    await UserCartModel.updateOne({user_id: user_id}, {
+        $set: {
+            username: userName,
+        }
+    })
+    await OrdersModel.updateMany({user_id: user_id}, {
+        $set: {
+            username: userName,
+        }
+    })
+
+    console.log(updated_user);
 
     res.redirect('/profile')
 });
 
-app.get('/tracker', function(req, res){
+app.get('/tracker', async function(req, res){
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     return res.render('tracker', {
         curr_user: curr_user
@@ -1086,7 +1105,7 @@ app.get('/tracker', function(req, res){
 app.get('/orders', async function(req, res) {
     let curr_user = null;
     if(req.session.isAuth){
-        curr_user = req.session;
+        curr_user = await UserModel.findOne({ _id:req.session._id});
     }
     
     const user_orders = await OrdersModel.find({user_id: curr_user._id});

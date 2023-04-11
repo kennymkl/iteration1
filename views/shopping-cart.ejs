@@ -31,16 +31,14 @@
 
     <!-- MAIN CONTENT -->
     <section class="SCart">
-        <!-- ERROR MSG -->
-		<% if(msg){ %>
-			<div class="error-msg" id="error-msg">
-				<%= msg %>
-				<div class="error-msg-btn" onclick="hideMSG()">x</div>
-			</div>
-		<% } %>
-
-
         <div class="main_SCart">
+            <!-- ERROR MSG -->
+            <% if(msg){ %>
+                <div class="error-msg" id="error-msg">
+                    <%= msg %>
+                    <div class="error-msg-btn" onclick="hideMSG()">x</div>
+                </div>
+            <% } %>
             <h1>Shopping Cart</h1>
                 <div class="project">
                     <div class="shop">
@@ -72,7 +70,11 @@
         <div class="right-bar">
             <p><span>Subtotal</span> <span>PHP <%= total_price %></span></p>
             <hr>
-            <a href="/checkout/<%=curr_user.username%>/<%=total_price%>"><i class="fa-solid fa-cart-shopping"></i>Checkout</a> 
+            <form action="/checkout" method="post">
+                <input type="hidden" name="user_id" value="<%=curr_user._id%>">
+                <input type="hidden" name="total_price" value="<%=total_price%>">
+                <button type="submit" class="checkout-btn"> <i class="fa-solid fa-cart-shopping"></i> Checkout </button>
+            </form>
         </div>
     </section>
     
