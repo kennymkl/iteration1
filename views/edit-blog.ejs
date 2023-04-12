@@ -28,7 +28,7 @@
         <%} %>
 
         <section class="admin-title">
-            <h1> EDIT BLOG #<%=edit_item._id%> </h1>
+            <h1> EDIT BLOG #<%=edit_blog._id%> </h1>
         </section>
 
         <!-- EDIT BLOG DETAILS -->
@@ -36,14 +36,14 @@
             <div class="admin-form">
                 <h3> BLOG DETAIL </h3>
                 <form action="/update-blog-details" method="post">
-                    <input type="hidden" name="item_id" value="<%=edit_item._id%>">
+                    <input type="hidden" name="blog_id" value="<%=edit_blog._id%>">
                     <div class="form-row">
-                        <label for="blog_name"> ITEM NAME </label>
-                        <input type="text" name="blog_name" class="input-text" required="true" aria-required="true" value="<%=edit_item.item_name%>">
+                        <label for="blog_name"> BLOG NAME </label>
+                        <input type="text" name="blog_name" class="input-text" required="true" aria-required="true" value="<%=edit_blog.blog_name%>">
                     </div>
                     <div class="form-row">
                         <label for="description"> DESCRIPTION </label>
-                        <input type="text" name="description" class="input-text" required="true" aria-required="true" value="<%=edit_item.description%>">
+                        <input type="text" name="description" class="input-text" required="true" aria-required="true" value="<%=edit_blog.description%>">
                     </div>
                     <div class="form-row-last">
                         <input type="submit" name="register" class="register" value="Edit Item">
@@ -52,18 +52,18 @@
             </div>
         </section>
 
-        <!-- EDIT ITEM PHOTO-->
+        <!-- EDIT BLOG PHOTO-->
         <section>
             <div class="admin-form">
-                <h3> ITEM PHOTO </h3>
+                <h3> BLOG PHOTO </h3>
                 <div style="margin: 3rem;">
-                    <img src="../images/items/<%= edit_item.item_photo %>" alt="" width="300">
+                    <img src="../images/items/<%= edit_blog.blog_photo %>" alt="" width="300">
                 </div>
                 <form action="/change-photo" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="item_id" value="<%=edit_item._id%>">
+                    <input type="hidden" name="blog_id" value="<%=edit_blog._id%>">
                     <div class="form-row">
-                        <label for="password" class="item-photo-name"> Item Photo Filename: <%= edit_item.item_photo %></label> <br><br>
-                        <input type="file" name="item_photo" class="input-text" required="true" aria-required="true">
+                        <label for="password" class="item-photo-name"> Blog Photo Filename: <%= edit_blog.blog_photo %></label> <br><br>
+                        <input type="file" name="blog_photo" class="input-text" required="true" aria-required="true">
                         <label class="item-photo-guide"> Note: 1 photo only </label>
                     </div>
                     <div class="form-row-last">

@@ -916,6 +916,66 @@ app.get('/delete-blog/:blog_id', async function(req, res) {
     return res.redirect('/admin');
 });
 
+// EDIT BLOG PAGE
+app.post('/edit-blog', async function(req, res) {
+
+    let curr_user = null
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = await UserModel.findOne({ _id:req.session._id});
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const blog_id = req.body.edit_blog;
+
+    const edit_blog = await BlogsModel.findOne({_id: blog_id});
+
+    console.log(edit_blog);
+
+    res.render('edit-blog', {
+        curr_user: curr_user,
+        msg: msg,
+        edit_blog: edit_blog
+    });
+
+});
+
+// Update edited blog
+app.post('/update-blog-details', async function(req, res) {
+    let curr_user = null
+
+    if(req.session.isAuth){
+        curr_user = await UserModel.findOne({ _id:req.session._id});
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const {blog_id, blog_name, description} = req.body;
+
+    const edit_blog = await BlogsModel.findOne({_id: blog_id});
+
+    await BlogsModel.updateOne({_id: blog_id},{
+        blog_name: blog_name,
+        description: description
+    })
+
+    res.redirect('/admin');
+});
+
 // ADD AVAILABILITY PAGE
 app.post('/add-availability', async function(req, res){
     let curr_user = null;
