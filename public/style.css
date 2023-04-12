@@ -65,6 +65,15 @@ main{
     margin-left: 2rem;
     width: 65%;
     font-size: 1.75rem;
+    text-decoration: none;
+    color: var(--font-primary);
+}
+.navbar-title:hover{
+    transform: scale(1.05);
+    transition: 200ms ease;
+}
+.navbar-title a:visited{
+    color: var(--font-primary);
 }
 .navbar-item{
     margin-left: 2.5rem;
@@ -101,6 +110,7 @@ main{
 }
 .navbar-link:hover{
     opacity: 100%;
+    transform: scale(1.05);
     transition: 200ms ease;
 }
 .nav-user{
@@ -197,6 +207,10 @@ a{
     display: flex;
     justify-content: center;
     margin-bottom: 0.5rem;
+}
+.icon-link:hover{
+    transform: scale(1.05);
+    transition: 200ms ease;
 }
 .icon-link{
     margin: 2rem;
@@ -790,7 +804,6 @@ input[type=submit]:hover{
 	padding: 5px 40px;
 	list-style: none;
 }
-
 .shop-filter a{
 	text-decoration:none;
 }
@@ -808,12 +821,13 @@ input[type=submit]:hover{
 }
 
 .item-container{
-    margin: 7rem;
-
-    display: grid;
-    gap: 2rem;
-
-    grid-template-columns: 1fr 1fr;
+    margin: auto;
+    max-width: fit-content;
+    display: flex;
+    align-items:start;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 .item-card{
     display: flex;
@@ -823,8 +837,13 @@ input[type=submit]:hover{
 	align-items: center;
     width: 30rem;
     height: 20rem;
-
+    border: var(--bg-secondary) solid 1px;
     border-radius: 1rem;
+    margin: 2rem;
+}
+
+.item-container form{
+    width:fit-content;
 }
 
 .item-card img{
