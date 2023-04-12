@@ -210,6 +210,7 @@ a{
 }
 .collection-img{
     max-width: 100%;
+    border-radius: 2px;
 }
 /* FOOTER */
 .links{
@@ -788,7 +789,6 @@ input[type=text]:focus,input[type=password]:focus{
 /*Size Chart Styles*/
 
 .sizechart-main{
-
   margin-top: 3rem;
   font-size: 24px;
   height: 100vh;
@@ -798,19 +798,27 @@ input[type=text]:focus,input[type=password]:focus{
 }
 
 .sizechart-image{
-  max-width: 60%;
+  max-width: 50%;
+  border-radius: 2px;
   height: auto;
   margin-bottom: 5rem;
 }
 
 .sizechart-main h1{
-  margin: 5rem;
+  margin: 2rem;
+  padding: 2rem;
+  border-bottom: var(--font-primary) solid 1px;
+  width: fit-content;
 }
 
 
 /* SHOP CSS HERE*/
 .shop-filter{
-    margin: 2rem;
+    width: fit-content;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: var(--font-primary) solid 1px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -848,6 +856,7 @@ input[type=text]:focus,input[type=password]:focus{
     justify-content: center;
     text-align: center;
 	align-items: center;
+    background-color: var(--bg-secondary);
     width: 30rem;
     height: 20rem;
     border: var(--bg-secondary) solid 1px;
@@ -927,7 +936,7 @@ input[type=text]:focus,input[type=password]:focus{
 }
 
 .item-card:hover{
-	background: var(--bg-secondary);
+	background: #2d2d2d;
 }
 
 .item-card:hover .item-price{
