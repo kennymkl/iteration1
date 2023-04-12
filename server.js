@@ -60,10 +60,12 @@ const UserModel = require('./models/userDB');
 const UserCartModel = require('./models/user_cartDB');
 const ItemsModel = require('./models/itemsDB');
 const OrdersModel = require('./models/ordersDB');
+const BlogsModel = require('./models/blogsDB');
 const { findOneAndDelete } = require('./models/user_cartDB');
 const items = require('./models/itemsDB');
 const { AsyncResource } = require('async_hooks');
 const usercart = require('./models/user_cartDB');
+const blogs = require('./models/blogsDB');
 
 // LANDING PAGE
 app.get('/', async function(req, res){
@@ -261,8 +263,12 @@ app.get('/blog', async function(req, res){
     if(req.session.isAuth){
         curr_user = await UserModel.findOne({ _id:req.session._id});
     }
+	
+	const blogs = await BlogsModel.find({});
+	
     return res.render('blog', {
-        curr_user: curr_user
+        curr_user: curr_user,
+		blogs: blogs
     });
 });
 
@@ -390,12 +396,14 @@ app.get('/admin', async function(req, res){
     const orders = await OrdersModel.find({}); // Gets all orders
     const all_users = await UserModel.find({ _id: {$nin: curr_user._id}, user_type: {$lte: curr_user.user_type}}); // Gets all lower or equal users except current user
     const all_items = await ItemsModel.find({}); // Gets all items
+	const all_blogs = await BlogsModel.find({}); // Gets all blogs
     
     return res.render('admin-dash',{
         msg: msg,
         curr_user: curr_user,
         all_users: all_users,
         all_items: all_items,
+		all_blogs: all_blogs,
         orders: orders
     });
 
@@ -842,6 +850,70 @@ app.post('/update-item-details', async function(req, res) {
     })
 
     res.redirect('/admin');
+});
+
+// ADD BLOG PAGE
+app.get('/create-blog', async function(req, res) {
+
+    let curr_user = null
+    let msg = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    res.render('create-blog', {
+        curr_user: curr_user,
+        msg: msg
+    })
+});
+
+// Add blog to DB
+app.post('/add-blog', upload.single('blog_photo') ,async function(req, res){
+    
+    let curr_user = null;
+
+    if(req.session.isAuth){
+        curr_user = req.session;
+
+        // Not allowed if user type is a regular user (0). Only admin (1) and superuser (2) 
+        if(curr_user.user_type == 0){
+            return res.redirect('back');
+        }
+    }
+    if(!curr_user){
+        return res.redirect('back');
+    }
+
+    const {blog_name, description} = req.body;
+    const blog_photo = req.file.filename;
+
+    const newBlog = await BlogsModel({
+        blog_name: blog_name,
+        description: description,
+        blog_photo: blog_photo
+    }); 
+    await newBlog.save();
+
+    console.log(blog_name + " "  + description + " "  + blog_photo);
+    return res.redirect('/admin');
+});
+
+// Delete Blog in DB
+app.get('/delete-blog/:blog_id', async function(req, res) {
+    const blog_id = req.params.blog_id;
+    
+    await BlogsModel.deleteOne({_id: blog_id});
+
+    return res.redirect('/admin');
 });
 
 // ADD AVAILABILITY PAGE

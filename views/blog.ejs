@@ -32,6 +32,18 @@
     <main>
         
         <section class="post-list">
+			<% blogs.forEach((blog) =>{ %> 
+				<div class="post">
+                <div class="post-title">
+                    <%= blog.blog_name %> 
+                </div>
+                <div class="post-date">1/19/2022</div>
+                <img src="/images/items/<%= blog.blog_photo %>" alt="<%= blog.blog_photo %>" class="post-img">
+                <div class="post-caption">
+                    <%= blog.description %> 
+                </div>
+            </div>
+			<%})%>
             <div class="post">
                 <div class="post-title">
                     "Red Devils" - Retrospect's 2nd Collection

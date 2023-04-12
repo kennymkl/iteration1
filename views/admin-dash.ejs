@@ -98,6 +98,35 @@
                   </div>
                 </div>
             </div>
+			
+			<h2>Blog Management</h2>
+
+            <!-- BLOG TRACKING --> 
+            <div class="inventory-tracking admin-sec">
+
+              <% all_blogs.forEach((blog) => {%>
+              <div class="admin-card">
+                  <h2> <%= blog.blog_name %></h2>
+                  <img src="../images/items/<%= blog.blog_photo %>" alt="shirt pic" class="inv-item-card">
+                  <ul class>
+                      <li> Name: <%= blog.blog_name %></li>
+                      <li> Description: <%= blog.description %></li>
+                  </ul>
+
+                  <form action="/edit-blog" method="post">
+                    <input type="hidden" name="edit_item" value="<%=blog._id%>">
+                    <button class="item-btns" type="submit"> Edit Blog </button>
+                  </form>
+                  <a href="/delete-blog/<%=blog._id%>"><input class="item-btns" type="button" name="inv-del" value="delete"></input></a>
+              </div>
+              <% }); %>
+
+              <div class="admin-card additem">
+                  <a href="/create-blog"><input class="item-btns" type="button" name="inv-edit" value="ADD BLOG"></input></a>
+              </div>
+            </div>
+			
+			
 
             <h2>Admin User Management</h2>
             
