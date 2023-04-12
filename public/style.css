@@ -1141,6 +1141,56 @@ input[type=submit]:hover{
     padding:2rem;
 }
 
+.main-profile h1{
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: var(--bg-secondary) solid 2px;
+    width: fit-content;
+    font-size: 2rem;
+}
+.main-profile h1 span{
+    font-size: 1rem;
+}
+
+.main-profile h2{
+    margin-bottom:.75rem;
+
+}
+.profile-container{
+    border-bottom: var(--bg-secondary) solid 2px;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+.profile-content{
+    margin-bottom: 2rem;
+}
+
+.main-profile input[type=button], input[type=submit]{
+    width:fit-content;
+    padding: 1em;
+    font-size: 16px;
+    margin-top: 1em;
+    font-family: 'Montserrat';
+    background-color: var(--bg-secondary);
+    color: var(--font-primary);
+    border-radius: 4px;
+    border: none;
+}
+.main-profile input[type=button]:hover, input[type=submit]:hover{
+    background-color: #e8e8e8;
+    transition: 200ms ease;
+    color: var(--bg-secondary);
+    
+}
+
+.edit-profile-address{
+    width: 50vw;
+    max-width: 500px;
+    text-overflow: ellipsis;
+}
+
+
+
 .main-tracker{
     padding:2rem;
     display: flex;

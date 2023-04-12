@@ -27,25 +27,25 @@
         <%}                                                 %>
 
         <main class="main-profile">
-            <h1>My Profile - <%= user.username %></h1>
+            <h1>My Profile | <span><%= user.username %></span></h1>
             <!-- <div>
                 <h2>Name</h2>
                 <div>Garhy Aaron P. Guarnes</div>
             </div> -->
-            <div>
+            <div class="profile-container">
                 <h2>Email</h2>
-                <div><%= user.email %></div>
+                <div class="profile-content"><%= user.email %></div>
             </div>
-            <div>
+            <div class="profile-container">
                 <h2>Contact Number</h2>
-                <div><%= user.contact_no %></div>
+                <div class="profile-content"><%= user.contact_no %></div>
             </div>
-            <div>
+            <div class="profile-container">
                 <h2>Shipping Address</h2>
-                <div> <%= user.address %> </div>
+                <div class="profile-content"> <%= user.address %> </div>
             </div>
             <a href="/edit-profile">
-                <input type="button" value="Edit Profile" class="btn edit-btn"></input>
+                <input type="button" value="Edit Profile"></input>
             </a>
         </main>
     </body>
