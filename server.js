@@ -254,7 +254,7 @@ app.post('/checkout', async function(req, res) {
         }
     })
 
-    return res.redirect('/shopping-cart');
+    return res.redirect('/payment-prompt');
 });
 
 // BLOG
@@ -1248,6 +1248,30 @@ app.get('/orders', async function(req, res) {
         user_orders: user_orders
     })
 });
+
+
+app.get('/payment-options', async function(req, res){
+    let curr_user = null;
+    if(req.session.isAuth){
+        curr_user = await UserModel.findOne({ _id:req.session._id});
+    }
+
+    res.render('payment-options', {
+        curr_user: curr_user,
+    })
+});
+
+app.get('/payment-prompt', async function(req, res){
+    let curr_user = null;
+    if(req.session.isAuth){
+        curr_user = await UserModel.findOne({ _id:req.session._id});
+    }
+
+    res.render('payment-prompt', {
+        curr_user: curr_user,
+    })
+});
+
 
 
 app.listen(3000, () => console.log('Server started on port 3000'));

@@ -28,17 +28,26 @@
 
     <!-- MAIN CONTENT -->
     <main>
-        <section>
-            <div class="banner">
-                <img src="../images/banner-no-bg.png" alt="banner-img" class="banner-img">
-            </div>    
-        </section>
-        <div class="sizechart-main">
+        <div class="payment-main">
             
-            <h1>Size Chart</h1>
-            <img src="images/sizechart.jpg" alt="sizechart 1" class="sizechart-image">
-            <img src="images/sizechart2.jpg" alt="sizechart 2" class="sizechart-image">
-            <div class="sizechart-image2"></div>
+            <h1>Payment</h1>
+            
+            <div class="payment-instructions">
+                <p> 
+                    Payment is through <span class="highlight">GCash QR code</span> displayed below. Make sure to double check and 
+                    pay the exact amount <span class="highlight">If you opt to pay at a later date</span>, you may pay through gcash by 
+                    going to your <span class="highlight">"Shopping Cart"</span> and clicking <span class="highlight">"how to pay"</span> 
+                    in the top  right corner.
+                </p>
+
+                <div class="gcash-payment">
+                    <p class="highlight"> GCash </p>
+                    <img src="../images/retrospect-gcash.jpg" alt="Gcash QR Code">
+                </div>
+
+                <a href="/shopping-cart"><button class="next-btn"> NEXT </button></a>
+                
+            </div>
 
             <!-- FOOTER -->
             <%- include ('partials/footer-links') %>

@@ -664,6 +664,17 @@ input[type=text]:focus,input[type=password]:focus{
 .content h4{
     margin-bottom: 50px;
 }
+.payment-options{
+    text-decoration: none;
+    color: #ffffff;
+
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: right;
+
+    font-size: large;
+}
+
 /* Trash Bin (remove) */
 .btn-area{
     position: absolute;
@@ -926,6 +937,9 @@ input[type=text]:focus,input[type=password]:focus{
     font-size: 1.5rem;
 	display:none;
 }
+.size-disabled{
+    background-color: #bbbbbb;
+}
 
 .item-quantity{
 	margin-top: 0.5rem;
@@ -994,6 +1008,7 @@ input[type=text]:focus,input[type=password]:focus{
 .post-title{
     font-size: 2rem;
     margin-left: 0.5rem;
+    margin-bottom: 2rem;
 }
 .post-date{
     color: gray;
@@ -1222,6 +1237,12 @@ input[type=text]:focus,input[type=password]:focus{
     text-overflow: ellipsis;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .main-tracker{
     padding:2rem;
     display: flex;
@@ -1315,4 +1336,44 @@ input[type=text]:focus,input[type=password]:focus{
   .order-total{
     height: 3rem;
     font-weight: bold;
+  }
+
+  /* PAYMENT OPTIONS & PAYMENT PROMPT PAGE*/
+
+  .payment-main{
+    margin: 5rem;
+    font-size: 1.5rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .payment-instructions{
+    text-align: center;
+  }
+  .gcash-payment{
+    margin: 3rem;
+    align-content: center;
+  }
+  .highlight{
+    font-weight: bold;
+  }
+  .next-btn{
+    width: 20rem;
+    height: 5rem;
+
+    font-family: 'Montserrat';
+    font-size: 2.5rem;
+
+    border-radius: 0.5rem;
+    border: none;
+
+    color: #FFFFFF;
+    background-color: #3596d2;
+    transition: 500ms ease;
+  }
+  .next-btn:hover{
+    background-color: #004671;
+    transition: 500ms ease;
   }

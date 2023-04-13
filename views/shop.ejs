@@ -61,11 +61,17 @@
 									<%= item.price %> PHP 
 									<input type="hidden" name="price" value="<%= item.price %>">
 								</div>
+								<% let total_stock = 0;%>
 								<div class="item-size">
 									<label for="size">Size: </label>	
 									<select name="size" id="sizes">
 										<% item.availability.forEach((availability) => {%>
-											<option value="<%= availability.size %>"><%= availability.size %></option>
+											<% if(availability.stock === 0) {%>
+												<option class="size-disabled" value="<%= availability.size %>" disabled><%= availability.size %></option>
+											<% } else {%>
+												<option class="size-available" value="<%= availability.size %>"><%= availability.size %></option>
+												<% total_stock += availability.stock;%>	
+											<% } %>
 										<% }); %>
 									</select>
 								</div>
@@ -73,7 +79,11 @@
 									<label for="qty">Qty:  </label>
 									<input type="number" name="quantity" value="1" class="quantity" min="1">
 								</div>
-								<button class="buy-btn" type="submit">Add To Cart</button>
+								<% if (total_stock > 0) {%>
+									<button class="buy-btn" type="submit">Add To Cart</button>
+								<% } else { %>
+									<p class="item-quantity"> OUT OF STOCK</p>
+								<% }%>
 							</div>
 						</div>
 					</form>
