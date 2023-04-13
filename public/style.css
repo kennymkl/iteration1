@@ -69,6 +69,9 @@ main{
     text-decoration: none;
     color: var(--font-primary);
 }
+.navbar-title a{
+  color: var(--font-primary);
+}
 .navbar-title:hover{
     transform: scale(1.05);
     transition: 200ms ease;
@@ -1050,7 +1053,7 @@ input[type=text]:focus,input[type=password]:focus{
     background-color: var(--bg-secondary);
     color: var(--font-primary);
     max-width: 30rem;
-    height: fit-content;    
+    height: fit-content;
     display: grid;
     padding: 1rem;
     margin: 1rem;
@@ -1122,7 +1125,7 @@ input[type=text]:focus,input[type=password]:focus{
 .admin-form{
     margin: 3rem;
     padding: 1.5rem;
-    
+
     width: 50%;
     height: 50%;
 
@@ -1134,7 +1137,7 @@ input[type=text]:focus,input[type=password]:focus{
 }
 .admin-form-inputs{
     margin: 1rem;
-}  
+}
 .back-btn{
     margin-left: 3rem;
     width: 5rem;
@@ -1152,7 +1155,7 @@ input[type=text]:focus,input[type=password]:focus{
 }
 .CA-err-msg{
     margin-left: 30rem;
-} 
+}
 .user-type-guide, .item-photo-guide{
     margin-left: 3rem;
     color:#777777;
@@ -1219,7 +1222,7 @@ input[type=text]:focus,input[type=password]:focus{
     background-color: #e8e8e8;
     transition: 200ms ease;
     color: var(--bg-secondary);
-    
+
 }
 
 .edit-profile input[type=text]{
@@ -1306,7 +1309,7 @@ input::-webkit-inner-spin-button {
   }
 
   /*  ORDERS PAGE */
-  
+
   .order-main{
     margin-top: 3rem;
     margin-left: 18.5rem;
